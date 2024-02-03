@@ -19,12 +19,12 @@ public class IconController : MonoBehaviour
     }
   
     [SerializeField] GameObject Siabritukeru;
-
+    Animator animator;
     // Start is called before the first frame update
     void Start()
     {
         my = this.GetComponent<RectTransform>();
-
+        animator = this.GetComponent<Animator>();
         Siabritukeru.SetActive(false);
         my.localPosition = Title[0].localPosition;
     }
@@ -61,11 +61,11 @@ public class IconController : MonoBehaviour
     void IconPos() {
         if(Gamepad.current.leftStick.up.wasReleasedThisFrame) {
             my.localPosition = Title[0].localPosition;
-
+            animator.SetTrigger("Tyoku");
         }
         if(Gamepad.current.leftStick.down.wasReleasedThisFrame) {
             my.localPosition = Title[1].localPosition;
-
+            animator.SetTrigger("Tyoku");
         }
     }
 }

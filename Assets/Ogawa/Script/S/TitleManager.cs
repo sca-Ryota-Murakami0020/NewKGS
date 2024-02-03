@@ -21,26 +21,47 @@ public class TitleManager : MonoBehaviour
 
     [SerializeField] StageSelectController stageSelect;
 
+    [Header("モードセレクトUI"), SerializeField]
+    GameObject modeSelect;
+    [Header("縛りの否かUI"), SerializeField]
+    GameObject tukeru;
+    [Header("縛り選択UI"), SerializeField]
+    GameObject sibariSelect;
+    [Header("縛り確認UI"), SerializeField]
+    GameObject sibariKakunin;
+    [Header("TitleUI"), SerializeField]
+    Animator title;
+
     public static string sceneName;
 
     [SerializeField] GameObject playerImage;
     [SerializeField] GameObject[] titleSetumeiText;
-    [SerializeField] GameObject[] playerComent;
+    //[SerializeField] GameObject[] playerComent;
  //   [SerializeField] GameObject playerModel;
    // Animator anim;
 
     bool fade = false;
+    public bool TITLEFADE {
+        set {
+            this.fade = value;
+        }
+        get {
+            return this.fade;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
+        title.enabled = false;
         //Cursor.visible = false;
         SousaUIContorller.stageClear = 0;
         //anim = playerModel.GetComponent<Animator>();
-        //playerModel.SetActive(false);
+        /*playerModel.SetActive(false);
         for(int t = 0; t < titleSetumeiText.Length; t++) {
             titleSetumeiText[t].SetActive(false);
             playerComent[t].SetActive(false);
         }
+        */
         playerImage.SetActive(false);
         stageSelect = stageSelect.GetComponent<StageSelectController>();
 
@@ -76,20 +97,21 @@ public class TitleManager : MonoBehaviour
             SelectSetumei(5);
             //FadeOut();
             sibaritukeru.enabled = false;
-            fade = true;
+            //fade = true;
         }
 
         if(hontoi.YES) {
             SelectSetumei(5);
             hontoi.enabled = false;
 
-            fade = true;
+            //fade = true;
         }
 
         if(stageSelect.NORMAL) {
             SelectSetumei(5);
             stageSelect.enabled = false;
-            fade = true;
+            title.enabled = true;
+            //fade = true;
 
             //FadeOut();
         }
@@ -159,10 +181,10 @@ public class TitleManager : MonoBehaviour
         for(int u = 0; u < titleSetumeiText.Length; u++) {
             if(u == count) {
                 titleSetumeiText[count].SetActive(true);
-                playerComent[count].SetActive(true);
+                //playerComent[count].SetActive(true);
             } else {
                 titleSetumeiText[u].SetActive(false);
-                playerComent[u].SetActive(false);
+                //playerComent[u].SetActive(false);
             }
         }
     }

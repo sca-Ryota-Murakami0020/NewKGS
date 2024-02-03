@@ -37,15 +37,16 @@ public class StageSelectController : MonoBehaviour
     }
 
     public static MODE mode;
-
+    Animator animator;
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
         mode = MODE.NULL;
         myScripts = this.GetComponent<StageSelectController>();
         myScripts.enabled = true;
-        si = Siabritukeru.GetComponent<SibariTukeru>();
-        si.enabled = false;
+        //si = Siabritukeru.GetComponent<SibariTukeru>();
+        //si.enabled = false;
         Siabritukeru.SetActive(false);
         myPos = this.GetComponent<RectTransform>();
         for(int i = 0; i < Pos.Length; i++) {
@@ -63,13 +64,13 @@ public class StageSelectController : MonoBehaviour
 
     void StageIconMove() {
         if(Gamepad.current.leftStick.up.wasPressedThisFrame) {
-            
+            animator.SetTrigger("Tyoku");
             myPos.localPosition = Pos[0].localPosition;
 
         }
 
         if(Gamepad.current.leftStick.down.wasPressedThisFrame) {
-       
+            animator.SetTrigger("Tyoku");
             myPos.localPosition = Pos[1].localPosition;
         }
     }
@@ -95,7 +96,7 @@ public class StageSelectController : MonoBehaviour
 
     IEnumerator SibariActive() {
         yield return new WaitForSeconds(0.5f);
-        si.enabled = true;
+        //si.enabled = true;
         myScripts.enabled = false;
     }
 }

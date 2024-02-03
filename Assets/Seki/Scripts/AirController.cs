@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class AirController : MonoBehaviour
 {
     [SerializeField] GameObject Pos;
-    float speed = 10.0f;
+    [Header("飛行機スピード"), SerializeField] float speed;
     public float AIRSPEED {
         set {
             this.speed = value;
@@ -29,7 +29,7 @@ public class AirController : MonoBehaviour
 
     [SerializeField] GameManager gameManager;
     [SerializeField] PlayerC player;
-    [SerializeField] RawImage missimage;
+    [SerializeField] GameObject missimage;
     [SerializeField] GameObject[] missIcon;
     [SerializeField] PauseManager pause;
     [SerializeField] MissionManager missionManager;
@@ -67,7 +67,7 @@ public class AirController : MonoBehaviour
                 missIcon[i].SetActive(false);
             }
 
-            missimage.enabled = false;
+            missimage.SetActive(false);
         }
         }
 
