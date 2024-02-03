@@ -33,6 +33,7 @@ public class SibariTukeru : MonoBehaviour
     }
 
     SibariUIController sibariKind;
+    [SerializeField] Animator animator;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,9 +47,11 @@ public class SibariTukeru : MonoBehaviour
     {
         if(Gamepad.current.leftStick.left.wasReleasedThisFrame) {
             mypos.localPosition = handan[0].localPosition;
+            animator.SetTrigger("Tyoku");
         }
         if(Gamepad.current.leftStick.right.wasReleasedThisFrame) {
             mypos.localPosition = handan[1].localPosition;
+            animator.SetTrigger("Tyoku");
         }
 
         if(!sibariFlag) {
