@@ -77,7 +77,7 @@ public class SibariUIController : MonoBehaviour
 
     // Start is called before the first frame update
     void Start() {
-        titleManager.SelectSetumei(3);
+        titleManager.SelectSetumei(2);
         SetApp();
         playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
     }

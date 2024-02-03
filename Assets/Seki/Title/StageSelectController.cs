@@ -63,13 +63,13 @@ public class StageSelectController : MonoBehaviour
     }
 
     void StageIconMove() {
-        if(Gamepad.current.leftStick.up.wasPressedThisFrame) {
+        if(Gamepad.current.leftStick.left.wasPressedThisFrame) {
             animator.SetTrigger("Tyoku");
             myPos.localPosition = Pos[0].localPosition;
 
         }
 
-        if(Gamepad.current.leftStick.down.wasPressedThisFrame) {
+        if(Gamepad.current.leftStick.right.wasPressedThisFrame) {
             animator.SetTrigger("Tyoku");
             myPos.localPosition = Pos[1].localPosition;
         }
