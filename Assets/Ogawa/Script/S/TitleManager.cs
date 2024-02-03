@@ -49,10 +49,12 @@ public class TitleManager : MonoBehaviour
             return this.fade;
         }
     }
+    [SerializeField] Animator titleIcon;
     // Start is called before the first frame update
     void Start()
     {
         title.enabled = false;
+        titleIcon.enabled = false;
         //Cursor.visible = false;
         SousaUIContorller.stageClear = 0;
         //anim = playerModel.GetComponent<Animator>();
@@ -84,8 +86,9 @@ public class TitleManager : MonoBehaviour
         if(Icon.STAGE) {
             Icon.enabled = true;
             playerImage.SetActive(true);
+            titleIcon.enabled = true;
             //playerModel.SetActive(true);
-            IconObject.SetActive(false);
+            //IconObject.SetActive(false);
             Icon.STAGE = false;
         }
         if(sibaritukeru.SIBARIFLAG) {
@@ -94,21 +97,21 @@ public class TitleManager : MonoBehaviour
         }
 
         if(sibaritukeru.NO) {
-            SelectSetumei(5);
+            SelectSetumei(4);
             //FadeOut();
             sibaritukeru.enabled = false;
             //fade = true;
         }
 
         if(hontoi.YES) {
-            SelectSetumei(5);
+            SelectSetumei(4);
             hontoi.enabled = false;
 
             //fade = true;
         }
 
         if(stageSelect.NORMAL) {
-            SelectSetumei(5);
+            SelectSetumei(4);
             stageSelect.enabled = false;
             title.enabled = true;
             //fade = true;
@@ -131,6 +134,7 @@ public class TitleManager : MonoBehaviour
         }
 
     }
+ 
 
     void FadeOut() {
         alfa += fadeSpeed;

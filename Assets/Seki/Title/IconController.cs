@@ -17,12 +17,21 @@ public class IconController : MonoBehaviour
             return this.stageFlag;
         }
     }
-  
+    bool titlefade = false;
+    public bool TITLEFADE {
+        set { this.titlefade = value; }
+        get { return this.titlefade; }
+    }
+    [SerializeField]
+    GameObject[] underUi;
     [SerializeField] GameObject Siabritukeru;
     Animator animator;
     // Start is called before the first frame update
     void Start()
     {
+        for(int i = 0; i < underUi.Length; i++) {
+            underUi[i].SetActive(false);
+        }
         my = this.GetComponent<RectTransform>();
         animator = this.GetComponent<Animator>();
         Siabritukeru.SetActive(false);
@@ -39,33 +48,50 @@ public class IconController : MonoBehaviour
 
 
         if(my.localPosition == Title[0].localPosition) {
+            UnderUI(0);
             if(Gamepad.current.bButton.wasReleasedThisFrame) {
                 stageFlag = true;
-                Siabritukeru.SetActive(true);
+                
             }
         }
 
         if(my.localPosition == Title[1].localPosition) {
+            UnderUI(1);
             if(Gamepad.current.bButton.wasReleasedThisFrame) {
                 //stageFlag = true;
                 //Siabritukeru.SetActive(true);
             }
         }
-
+        if(titlefade) {
+            Siabritukeru.SetActive(true);
+        }
     }
+
 
 
     /// <summary>
     /// É^ÉCÉgÉãÇÃIconÇìÆÇ©Ç∑ä÷êî
     /// </summary>
     void IconPos() {
-        if(Gamepad.current.leftStick.up.wasReleasedThisFrame) {
+        if(Gamepad.current.leftStick.right.wasReleasedThisFrame) {
             my.localPosition = Title[0].localPosition;
-            animator.SetTrigger("Tyoku");
+            
+            animator.SetBool("Tyoku",false);
         }
-        if(Gamepad.current.leftStick.down.wasReleasedThisFrame) {
+        if(Gamepad.current.leftStick.left.wasReleasedThisFrame) {
             my.localPosition = Title[1].localPosition;
-            animator.SetTrigger("Tyoku");
+
+            animator.SetBool("Tyoku", true);
+        }
+    }
+
+    void UnderUI(int c) {
+        for(int i = 0; i < underUi.Length; i++) {
+            if(i == c) {
+                underUi[c].SetActive(true);
+            } else {
+                underUi[i].SetActive(false);
+            }
         }
     }
 }

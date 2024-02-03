@@ -40,7 +40,7 @@ public class Hontoni : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        titleManager.SelectSetumei(4);
+        titleManager.SelectSetumei(3);
         for(int i = 0; i < RevelText.Length; i++) {
             RevelText[i].SetActive(false);
         }
@@ -95,7 +95,7 @@ public class Hontoni : MonoBehaviour
             if(Gamepad.current.bButton.isPressed) {
                 Debug.Log("‚¢‚¢‚¦");
                 no=true;
-                titleManager.SelectSetumei(3);
+                titleManager.SelectSetumei(4);
                 StartCoroutine(WaitSousa());
                 SibariUI.SetActive(true);
                 
