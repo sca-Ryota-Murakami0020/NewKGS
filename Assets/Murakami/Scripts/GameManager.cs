@@ -168,7 +168,7 @@ public class GameManager : MonoBehaviour
     {
         playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
 
-        stageCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        stageCanvas.renderMode = RenderMode.ScreenSpaceCamera;
         keyActiveObj.SetActive(true);
         _characterController = playerObject.GetComponent<CharacterController>();
         zankiIconText = zankiIocn.GetComponentInChildren<Text>();
@@ -251,6 +251,7 @@ public class GameManager : MonoBehaviour
 
     void FadeOut() {
         if(player.FALLING) {
+            stageCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
             if (!player.ALLGOAL) {
                 StartCoroutine(WaitInoti());
             }
@@ -352,6 +353,7 @@ public class GameManager : MonoBehaviour
         }
 
         if(P_alfa <= 0.0f) {
+            stageCanvas.renderMode = RenderMode.ScreenSpaceCamera;
             fadeIn = false;
             remain = false;
         }
