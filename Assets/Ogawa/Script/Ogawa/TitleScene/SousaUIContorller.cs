@@ -31,9 +31,9 @@ public class SousaUIContorller : MonoBehaviour
  
     AsyncOperation async;
 
-    [SerializeField] GameObject playerObj;
-    Vector3 pos;
-    Animator playeranim;
+   // [SerializeField] GameObject playerObj;
+   // Vector3 pos;
+   // Animator playeranim;
 
     bool ok = false;
     bool move = false;
@@ -43,8 +43,8 @@ public class SousaUIContorller : MonoBehaviour
 
     void Start()
     {
-        pos = playerObj.transform.position;
-        playeranim = playerObj.GetComponent<Animator>();
+        //pos = playerObj.transform.position;
+        //playeranim = playerObj.GetComponent<Animator>();
         okText.SetActive(false);
 
         _slider = sliderBar.GetComponent<Slider>();
@@ -95,7 +95,7 @@ public class SousaUIContorller : MonoBehaviour
         sliderBar.SetActive(false);
         _text.enabled = false;
         okText.SetActive(true);
-        playerObj.SetActive(false);
+        //playerObj.SetActive(false);
         ok = true;
     }
 
@@ -107,8 +107,8 @@ public class SousaUIContorller : MonoBehaviour
         }
 
         if(move) {
-            pos.x += 1.8f;
-            playerObj.transform.position = pos;
+            //pos.x += 1.8f;
+           // playerObj.transform.position = pos;
             move = false;
         }
 
@@ -120,7 +120,7 @@ public class SousaUIContorller : MonoBehaviour
         }
 
         if(_slider.value >= 100.0f) {
-            playeranim.SetBool("Fall", true);
+            //playeranim.SetBool("Fall", true);
         }
 
         if(tips) {

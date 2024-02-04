@@ -36,13 +36,16 @@ public class ScrollContoroller : MonoBehaviour
    
     [SerializeField] Animator[] Moji;
     [SerializeField] GameObject[] MojiText;
-
-    int u = 0;
-
+    [SerializeField] Animator skipIconAnim;
+    [SerializeField] GameObject[] underUI;
     // Start is called before the first frame update
     void Start()
     {
-        u = 3;
+        skipIconAnim.enabled = false;
+        for (int i = 0; i < underUI.Length; i++)
+        {
+            underUI[i].SetActive(false);
+        }
         finishAnim.enabled =false;
         finishPanel.enabled = false;
         for(int i = 0; i < backImage.Length; i++) {
@@ -112,8 +115,6 @@ public class ScrollContoroller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-   
-        Debug.Log(fadeOut);
         if(!scroll && !wait) { 
             if(transform.position.y <= limitPosition) {
                  transform.position = new Vector3(transform.position.x, transform.position.y+textScrollSpeed * Time.deltaTime, transform.position.z + textScrollSpeed * Time.deltaTime);
@@ -126,6 +127,7 @@ public class ScrollContoroller : MonoBehaviour
 
             if(Gamepad.current.startButton.isPressed) {
                 skipUI.SetBool("skip",true);
+                skipIconAnim.enabled = true;
                 scroll = true;
             }
         } else if(scroll && !fadeOut) {
@@ -185,6 +187,21 @@ public class ScrollContoroller : MonoBehaviour
         fadeImage.color = new Color(0, 0, 0, alfa);
     }
 
+    void underObj(int c)
+    {
+        for(int i = 0; i < underUI.Length; i++)
+        {
+            if(i == c)
+            {
+                underUI[c].SetActive(true);
+            }
+            else
+            {
+                underUI[i].SetActive(false);
+            }
+        }
+    }
+
     void SkipIconMove() {
         if(Gamepad.current.leftStick.left.wasPressedThisFrame) {
             skipIcon.localPosition = selectPos[0].localPosition;
@@ -198,20 +215,25 @@ public class ScrollContoroller : MonoBehaviour
 
        
         if(skipIcon.localPosition == selectPos[0].localPosition) {
-            if(Gamepad.current.bButton.wasPressedThisFrame) {
+            underObj(0);
+            skipIconAnim.SetBool("skip",false);
+            if (Gamepad.current.bButton.wasPressedThisFrame) {
                 Debug.Log("‚Í‚¢");
-                
+                start = true;
                 fadeOut = true;
                 }
             }
 
             if(skipIcon.localPosition == selectPos[1].localPosition) {
-                if(Gamepad.current.bButton.wasPressedThisFrame) {
+            underObj(1);
+            skipIconAnim.SetBool("skip", true);
+            if (Gamepad.current.bButton.wasPressedThisFrame) {
                     Debug.Log("‚¢‚¢‚¦");
                     StartCoroutine(ResetIcon());
                     skipUI.SetBool("skip", false);
                     scroll = false;
-                }
+                skipIconAnim.enabled = false;
+            }
             }
         
         }
