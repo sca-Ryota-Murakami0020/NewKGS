@@ -36,8 +36,23 @@ public class StageSelectController : MonoBehaviour
         NULL = 2,
     }
 
+    bool not = false;
+    public bool NOT
+    {
+        set
+        {
+            this.not = value;
+        }
+        get
+        {
+            return this.not;
+        }
+    }
+
     public static MODE mode;
     Animator animator;
+    [SerializeField] Animator parent;
+    [SerializeField] GameObject ModeUi;
     // Start is called before the first frame update
     void Start()
     {
@@ -59,7 +74,11 @@ public class StageSelectController : MonoBehaviour
     {
         StageIconMove();
         StageSelect();
-     
+        if(not)
+        {
+            ModeUi.SetActive(false);
+            not = false;
+        }
     }
 
     void StageIconMove() {
@@ -73,6 +92,10 @@ public class StageSelectController : MonoBehaviour
             animator.SetTrigger("Tyoku");
             myPos.localPosition = Pos[1].localPosition;
         }
+        if(Gamepad.current.aButton.wasPressedThisFrame)
+        {
+            parent.SetBool("fade", true);
+        }
     }
 
     void StageSelect() {
@@ -80,6 +103,7 @@ public class StageSelectController : MonoBehaviour
             title.SelectSetumei(0);
             if(Gamepad.current.bButton.isPressed) {
                 mode = MODE.STORY;
+                parent.SetBool("fade",true);
                 normal = true;
             }
             
