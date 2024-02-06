@@ -91899,6 +91899,8 @@ MonoBehaviour:
   missionManager: {fileID: 1120426503}
   pause: {fileID: 166024483}
   player: {fileID: 1688299407}
+  gameManager: {fileID: 1565694951}
+  gameOverThings: {fileID: 1724198267}
 --- !u!195 &2053879828
 NavMeshAgent:
   m_ObjectHideFlags: 0

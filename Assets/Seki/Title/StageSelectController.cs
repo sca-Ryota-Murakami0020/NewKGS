@@ -54,6 +54,7 @@ public class StageSelectController : MonoBehaviour
     [SerializeField] Animator parent;
     [SerializeField] GameObject ModeUi;
     [SerializeField] IconController icon;
+    [SerializeField] GameObject playerImage;
     // Start is called before the first frame update
     void Start()
     {
@@ -74,6 +75,7 @@ public class StageSelectController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("NOT"+not);
         StageIconMove();
         StageSelect();
         if(not)
@@ -96,6 +98,7 @@ public class StageSelectController : MonoBehaviour
         }
         if(Gamepad.current.aButton.wasPressedThisFrame)
         {
+            playerImage.SetActive(false);
             parent.SetBool("fade", true);
         }
     }
@@ -114,6 +117,7 @@ public class StageSelectController : MonoBehaviour
             title.SelectSetumei(1);
             if(Gamepad.current.bButton.isPressed) {
                 mode = MODE.CHALLENGE;
+                parent.SetBool("fade", true);
                 Siabritukeru.SetActive(true);
                 StartCoroutine(SibariActive());
             }
@@ -123,6 +127,7 @@ public class StageSelectController : MonoBehaviour
     IEnumerator SibariActive() {
         yield return new WaitForSeconds(0.5f);
         //si.enabled = true;
-        myScripts.enabled = false;
+      
+        //myScripts.enabled = false;
     }
 }

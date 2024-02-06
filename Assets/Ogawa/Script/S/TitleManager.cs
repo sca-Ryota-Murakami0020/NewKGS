@@ -114,7 +114,7 @@ public class TitleManager : MonoBehaviour
         if(stageSelect.NORMAL) {
             SelectSetumei(4);
             stageSelect.enabled = false;
-            title.enabled = true;
+            StartCoroutine(waitMove());
             //fade = true;
 
             //FadeOut();
@@ -132,8 +132,15 @@ public class TitleManager : MonoBehaviour
     private void FixedUpdate() {
         if(fade) {
             StartCoroutine(WaitFade());
+           
         }
 
+    }
+
+    IEnumerator waitMove() {
+        yield return new WaitForSeconds(2.0f);
+        playerImage.SetActive(false);
+        title.enabled = true;
     }
  
 
@@ -155,34 +162,6 @@ public class TitleManager : MonoBehaviour
     }
 
     public void SelectSetumei(int count) {
-        switch(count) {
-            case 0:
-                //anim.SetBool("ganba", false);
-                //anim.SetBool("hazu", true);
-                break;
-            case 1:
-                //anim.SetBool("hazu", false);
-                //anim.SetBool("ganba", true);
-                break;
-            case 2:
-                //anim.SetBool("ganba", false);
-                //anim.SetBool("quetion", true);
-                break;
-            case 3:
-                //anim.SetBool("think", true);
-                //anim.SetBool("quetion", false);
-                break;
-            case 4:
-                //anim.SetBool("think", false);
-                //anim.SetBool("ready", true);
-                break;
-            case 5:
-                //anim.SetBool("ready", false);
-                //anim.SetBool("quetion", false);
-                //anim.SetBool("ok", true);
-                //anim.SetBool("hazu", false);
-                break;
-        }
         for(int u = 0; u < titleSetumeiText.Length; u++) {
             if(u == count) {
                 titleSetumeiText[count].SetActive(true);

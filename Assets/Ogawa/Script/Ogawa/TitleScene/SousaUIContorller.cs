@@ -15,6 +15,8 @@ public class SousaUIContorller : MonoBehaviour
     [SerializeField] GameObject[] gameImage;
     //ページ数が分かるUI
     [SerializeField] Image[] nextImage;
+    //ギミック関係の画面
+    [SerializeField] GameObject[] gimikkuImage;
 
     [SerializeField] GameObject _loadingUI;
 
@@ -56,8 +58,10 @@ public class SousaUIContorller : MonoBehaviour
         for(int u = 0; u < stageImage.Length; u++) {
             stageImage[u].SetActive(false);
         }
-       
-   
+        for(int u = 0; u < gimikkuImage.Length; u++) {
+            gimikkuImage[u].SetActive(false);
+        }
+
         LoadNextScene();
     }
 
@@ -149,6 +153,9 @@ public class SousaUIContorller : MonoBehaviour
                 } else if(random == 1){
                     stageImage[count].SetActive(true);
                 }
+                else if(random == 2) {
+                    gimikkuImage[count].SetActive(true);
+                }
 
                 nextImage[count].color = new Color(255, 0, 0);
             } else {
@@ -156,6 +163,8 @@ public class SousaUIContorller : MonoBehaviour
                     gameImage[i].SetActive(false);
                 } else if(random == 1) {
                     stageImage[i].SetActive(false);
+                } else if(random == 2) {
+                    gimikkuImage[count].SetActive(false);
                 }
                 nextImage[i].color = new Color(255, 255, 255);
             }

@@ -68,15 +68,17 @@ public class SibariUIController : MonoBehaviour
         }
     }
 
-    [SerializeField] GameObject SibariQuestion;
+    [SerializeField] GameObject modeStage;
     [SerializeField] GameObject SibariKind;
     int right;
     [SerializeField] TitleManager titleManager;
 
     private PlayerManager playerManager;
-
+    [SerializeField] StageSelectController stage;
+    [SerializeField] Animator modeAnim;
     // Start is called before the first frame update
     void Start() {
+        //stage.enabled = false;
         titleManager.SelectSetumei(2);
         SetApp();
         playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
@@ -234,9 +236,11 @@ public class SibariUIController : MonoBehaviour
         if(Gamepad.current.aButton.isPressed) {
             SetApp();
             myComp.enabled = false;
+            stage.enabled = true;
             SibariKind.SetActive(false);
-            SibariQuestion.SetActive(true);
-
+            modeStage.SetActive(true);
+          
+            modeAnim.SetBool("title",true);
         }
     }
 
