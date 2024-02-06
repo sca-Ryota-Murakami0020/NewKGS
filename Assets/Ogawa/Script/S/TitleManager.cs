@@ -50,6 +50,7 @@ public class TitleManager : MonoBehaviour
         }
     }
     [SerializeField] Animator titleIcon;
+    //ƒeƒXƒg
     // Start is called before the first frame update
     void Start()
     {
