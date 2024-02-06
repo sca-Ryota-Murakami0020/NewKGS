@@ -198,14 +198,14 @@ public class SibariUIController : MonoBehaviour
                     next = true;
                 }
             }
-
+            /*
             if(hon) {
                 honto.SetActive(true);
                 hon = false;
                 myComp.enabled = false;
                 ho.enabled = true;
             }
-
+            */
             if(sibariCount != 0) {
                 Decied.color = new Color32(255, 255, 255, 255);
 
