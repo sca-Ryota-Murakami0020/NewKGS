@@ -24,8 +24,9 @@ public class IconController : MonoBehaviour
     }
     [SerializeField]
     GameObject[] underUi;
-    [SerializeField] GameObject Siabritukeru;
+    [SerializeField] GameObject mode;
     Animator animator;
+    [SerializeField] Animator parent;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,7 +35,7 @@ public class IconController : MonoBehaviour
         }
         my = this.GetComponent<RectTransform>();
         animator = this.GetComponent<Animator>();
-        Siabritukeru.SetActive(false);
+        mode.SetActive(false);
         my.localPosition = Title[0].localPosition;
     }
 
@@ -51,7 +52,7 @@ public class IconController : MonoBehaviour
             UnderUI(0);
             if(Gamepad.current.bButton.wasReleasedThisFrame) {
                 stageFlag = true;
-                
+                parent.SetBool("title", false);
             }
         }
 
@@ -63,7 +64,8 @@ public class IconController : MonoBehaviour
             }
         }
         if(titlefade) {
-            Siabritukeru.SetActive(true);
+            mode.SetActive(true);
+            titlefade = false;
         }
     }
 
