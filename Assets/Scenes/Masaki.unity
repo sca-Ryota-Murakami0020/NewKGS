@@ -5396,7 +5396,8 @@ MonoBehaviour:
   Siabritukeru: {fileID: 1182817099}
   title: {fileID: 964387078}
   parent: {fileID: 1424042550}
-  ModeUi: {fileID: 0}
+  ModeUi: {fileID: 1424042546}
+  icon: {fileID: 878128787}
 --- !u!114 &784230820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5964,7 +5965,8 @@ MonoBehaviour:
   underUi:
   - {fileID: 1041647300}
   - {fileID: 1497719770}
-  Siabritukeru: {fileID: 1424042546}
+  mode: {fileID: 1424042546}
+  parent: {fileID: 584673266}
 --- !u!95 &878128788
 Animator:
   serializedVersion: 5
@@ -8720,6 +8722,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageSelect: {fileID: 784230819}
+  iconAnim: {fileID: 584673266}
+  icon: {fileID: 878128787}
 --- !u!1 &1428542848
 GameObject:
   m_ObjectHideFlags: 0

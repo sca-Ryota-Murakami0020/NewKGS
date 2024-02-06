@@ -53,9 +53,11 @@ public class StageSelectController : MonoBehaviour
     Animator animator;
     [SerializeField] Animator parent;
     [SerializeField] GameObject ModeUi;
+    [SerializeField] IconController icon;
     // Start is called before the first frame update
     void Start()
     {
+        icon.enabled = false;
         animator = GetComponent<Animator>();
         mode = MODE.NULL;
         myScripts = this.GetComponent<StageSelectController>();

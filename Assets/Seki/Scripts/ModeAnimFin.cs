@@ -5,6 +5,8 @@ using UnityEngine;
 public class ModeAnimFin : MonoBehaviour
 {
     [SerializeField] StageSelectController stageSelect;
+    [SerializeField] Animator iconAnim;
+    [SerializeField] IconController icon;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,5 +22,9 @@ public class ModeAnimFin : MonoBehaviour
     public void OnAnimFin()
     {
         stageSelect.NOT = true;
+        if(!stageSelect.NORMAL) {
+            icon.enabled = true;
+            iconAnim.SetBool("title", true);
+        }
     }
 }
