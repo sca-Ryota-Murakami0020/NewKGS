@@ -13,7 +13,8 @@ public class CrazyCar : MonoBehaviour
     float d;
     [SerializeField] PauseManager pause;
     [SerializeField] PlayerC player;
- 
+    [SerializeField] GameManager gameManager;
+    [SerializeField] GameObject gameOverThings;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,7 +42,12 @@ public class CrazyCar : MonoBehaviour
         
             destPoint++;
         }
-        
+        else if(destPoint == Pos.Length) {
+            gameManager.GAMEOVER = true;
+            gameManager.CurrentRemain = -1;
+            gameOverThings.SetActive(false);
+            player.FALLING = true;
+        }
     }
 
     private void OnCollisionEnter(Collision collision) {
