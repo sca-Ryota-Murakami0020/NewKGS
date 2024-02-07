@@ -31,11 +31,46 @@ public class DemoIcon : MonoBehaviour
     [SerializeField] Sprite[] hardIcon;
     [SerializeField] Sprite[] exIcon;
     [SerializeField] Image iconImage;
-    int allCount = 0;
+    [SerializeField] Animator deceid;
+    [SerializeField] GameObject[] emptyText;
+    [SerializeField] GameObject[] oneText;
+    [SerializeField] GameObject[] twoText;
+    [SerializeField] GameObject[] treeText;
+    private PlayerManager playerManager;
+    [SerializeField] Animator sibariUnder;
+    bool go = false;
+    public bool GO {
+        set {
+            this.go = value;
+        }
+        get {
+            return this.go;
+        }
+    }
+    bool sousa = false;
+    public bool SOUSA {
+        set {
+            this.sousa = value;
+        }
+        get {
+            return this.sousa;
+        }
+    }
+
+    [SerializeField] Animator parent;
+    [SerializeField] TitleManager titleManager;
     // Start is called before the first frame update
     void Start()
     {
+        
+        playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
         iconImage.sprite = normalIcon[0];
+        for(int i = 0; i < emptyText.Length; i++) {
+            emptyText[i].SetActive(false);
+            oneText[i].SetActive(false);
+            twoText[i].SetActive(false);
+            treeText[i].SetActive(false);
+        }
         sibariCount = new int[6];
         bCount = new int[6];
         for(int i = 0; i < backImage.Length; i++) {
@@ -47,47 +82,90 @@ public class DemoIcon : MonoBehaviour
     void Update()
     {
         
-        Debug.Log("縛りカウント"+ tree);
+        Debug.Log("縛りカウント"+ leftright);
         levelCopy =levelCount;
         levelText.text = "(レベル"+ (levelCopy + 1)+")";
+        if(sousa) { 
         StickMove(leftright);
         LeftRightStick();
         levelIcon();
         if(myPos.localPosition == Pos[0].localPosition) {
+        
             PosButton(0);
             ChangeIcon(levelCount,0);
         }
         else if(myPos.localPosition == Pos[1].localPosition) {
+            
             PosButton(1);
             ChangeIcon(levelCount, 1);
         }
         else if(myPos.localPosition == Pos[2].localPosition) {
+            
             PosButton(2);
             ChangeIcon(levelCount, 2);
         }
         else if(myPos.localPosition == Pos[3].localPosition) {
+            
             PosButton(3);
             ChangeIcon(levelCount, 3);
         }
         else if(myPos.localPosition == Pos[4].localPosition) {
+            
             PosButton(4);
             ChangeIcon(levelCount, 4);
         }
         else if(myPos.localPosition == Pos[5].localPosition) {
+            
             PosButton(5);
             ChangeIcon(levelCount, 5);
+            }
+            if(myPos.localPosition == deciedPos.localPosition) {
+
+                deceid.SetBool("decid", true);
+                if(Gamepad.current.bButton.wasPressedThisFrame) {
+                    Debug.Log("決定");
+                    parent.SetBool("sibariFlag",true);
+                    sousa = false;
+                    go = true;
+                }
+            } else {
+
+                deceid.SetBool("decid", false);
+            }
+        }
+
+        if(Gamepad.current.aButton.wasPressedThisFrame) {
+            parent.SetBool("sibariFlag", true);
+            this.enabled = false;
         }
     }
 
-    void ChangeIcon(int l,int c) {
+        void ChangeIcon(int l,int c) {
+        for(int i = 0; i < emptyText.Length; i++) {
+            if(i == c) {
+                emptyText[c].SetActive(true);
+            }
+            else {
+                emptyText[i].SetActive(false);
+            }
+        }
         if(l == 0) {
             iconImage.sprite = normalIcon[c];
+            oneText[c].SetActive(true);
+            twoText[c].SetActive(false);
+            treeText[c].SetActive(false);
         }
         else if(l == 1) {
             iconImage.sprite = hardIcon[c];
+            twoText[c].SetActive(true);
+            oneText[c].SetActive(false);
+            treeText[c].SetActive(false);
         }
         else if(l == 2) {
             iconImage.sprite = exIcon[c];
+            treeText[c].SetActive(true);
+            oneText[c].SetActive(false);
+            twoText[c].SetActive(false);
         }
     }
 
@@ -104,7 +182,7 @@ public class DemoIcon : MonoBehaviour
     void ChangeBack(int c,int[] j) {
         if(j[c] == 1) {
             sibariCount[c]++;
-            allCount += sibariCount[c];
+            
             backImage[c].color = new Color32(255, 255, 0, 130);
             
         }
@@ -112,9 +190,7 @@ public class DemoIcon : MonoBehaviour
             if(sibariCount[c] >= -1) {
                 sibariCount[c]--;
             }
-            if(allCount >= -1) {
-                allCount--;
-            }
+            
             
             backImage[c].color = new Color32(0, 0, 0, 89);
         }
@@ -181,11 +257,13 @@ public class DemoIcon : MonoBehaviour
     }
 
     void LeftRightStick() {
-        if(Gamepad.current.leftStick.left.wasPressedThisFrame && leftright >= -1) {
+        if(Gamepad.current.leftStick.left.wasPressedThisFrame && leftright > 0) {
+            sibariUnder.SetTrigger("sibari");
             leftright--;
             leftStck(leftright);
         }
-        if(Gamepad.current.leftStick.right.wasPressedThisFrame && leftright <= 3) {
+        if(Gamepad.current.leftStick.right.wasPressedThisFrame && leftright < 2) {
+            sibariUnder.SetTrigger("sibari");
             leftright++;
             rightStck(leftright);
         }
@@ -231,18 +309,22 @@ public class DemoIcon : MonoBehaviour
 
     void OneStick() {
         if(Gamepad.current.leftStick.up.wasPressedThisFrame) {
+            sibariUnder.SetTrigger("sibari");
             myPos.localPosition = Pos[0].localPosition;
         }
         if(Gamepad.current.leftStick.down.wasPressedThisFrame) {
+            sibariUnder.SetTrigger("sibari");
             myPos.localPosition = Pos[1].localPosition;
         }
     }
 
     void TwoStick() {
         if(Gamepad.current.leftStick.up.wasPressedThisFrame) {
+            sibariUnder.SetTrigger("sibari");
             myPos.localPosition = Pos[2].localPosition;
         }
         if(Gamepad.current.leftStick.down.wasPressedThisFrame) {
+            sibariUnder.SetTrigger("sibari");
             myPos.localPosition = Pos[3].localPosition;
         }
     }
@@ -250,27 +332,26 @@ public class DemoIcon : MonoBehaviour
     int tree = 0;
     void TreeStick() {
         if(Gamepad.current.leftStick.up.wasPressedThisFrame) {
-            if(allCount > 0) {
-                if(tree > 0) {
-                    tree--;
-                }
-                if(tree == 0) {
-                    myPos.localPosition = Pos[4].localPosition;
-                } else if(tree == 1) {
-                    myPos.localPosition = Pos[5].localPosition;
-                }
-            } else {
+           if(tree > 0) {
+              tree--;
+           }
+           if(tree == 0) {
+                sibariUnder.SetTrigger("sibari");
                 myPos.localPosition = Pos[4].localPosition;
-            }
+           } else if(tree == 1) {
+                sibariUnder.SetTrigger("sibari");
+                myPos.localPosition = Pos[5].localPosition;
+           }
         }
         if(Gamepad.current.leftStick.down.wasPressedThisFrame) {
-            if(allCount > 0) {
+            if(tree != 2) {
                 tree++;
             }
-            
+            sibariUnder.SetTrigger("sibari");
             myPos.localPosition = Pos[5].localPosition;
         }
-        if(Gamepad.current.leftStick.down.wasPressedThisFrame && allCount != 0 && tree == 2) {
+        if(Gamepad.current.leftStick.down.wasPressedThisFrame && tree == 2) {
+            sibariUnder.SetTrigger("sibari");
             myPos.localPosition = deciedPos.localPosition;
         }
     }
