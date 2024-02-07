@@ -88,7 +88,7 @@ public class SibariUIController : MonoBehaviour
         placeDebath = false;
         next = false;
         hon = false;
-        SentakuCount = new int[7];
+        SentakuCount = new int[6];
         placeCount = 0;
         sousaCount = 0;
         revel = 0;
@@ -183,14 +183,7 @@ public class SibariUIController : MonoBehaviour
                     SentakuPoint(placeCount);
                 }
             }
-            if(myPos.localPosition == Pos[6].localPosition) {
-                placeCount = 6;
-                SentakuIcon(placeCount);
-                if(Gamepad.current.bButton.wasPressedThisFrame) {
-
-                    SentakuPoint(placeCount);
-                }
-            }
+           
             if(myPos.localPosition == DeciePos.localPosition) {
                 if(Gamepad.current.bButton.isPressed) {
 
