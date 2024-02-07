@@ -50,7 +50,7 @@ public class TitleManager : MonoBehaviour
         }
     }
     [SerializeField] Animator titleIcon;
-    
+    [SerializeField] DemoIcon demoIcon;
     // Start is called before the first frame update
     void Start()
     {
@@ -92,21 +92,23 @@ public class TitleManager : MonoBehaviour
             //IconObject.SetActive(false);
             Icon.STAGE = false;
         }
+        /*
         if(sibaritukeru.SIBARIFLAG) {
             SibaritukeruObject.SetActive(false);
             sibaritukeru.SIBARIFLAG = false;
         }
 
+        
         if(sibaritukeru.NO) {
             SelectSetumei(4);
             //FadeOut();
             sibaritukeru.enabled = false;
             //fade = true;
         }
-
-        if(hontoi.YES) {
+        */
+        if(demoIcon.GO) {
             SelectSetumei(4);
-            hontoi.enabled = false;
+            
 
             //fade = true;
         }
