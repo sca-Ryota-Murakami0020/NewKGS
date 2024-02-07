@@ -59,6 +59,7 @@ public class StageSelectController : MonoBehaviour
     void Start()
     {
         icon.enabled = false;
+        parent.enabled = true;
         animator = GetComponent<Animator>();
         mode = MODE.NULL;
         myScripts = this.GetComponent<StageSelectController>();
@@ -89,10 +90,11 @@ public class StageSelectController : MonoBehaviour
         if(Gamepad.current.leftStick.left.wasPressedThisFrame) {
             animator.SetTrigger("Tyoku");
             myPos.localPosition = Pos[0].localPosition;
-
+           
         }
 
         if(Gamepad.current.leftStick.right.wasPressedThisFrame) {
+            title.SelectSetumei(1);
             animator.SetTrigger("Tyoku");
             myPos.localPosition = Pos[1].localPosition;
         }
@@ -106,7 +108,7 @@ public class StageSelectController : MonoBehaviour
     void StageSelect() {
         if(myPos.localPosition == Pos[0].localPosition) {
             title.SelectSetumei(0);
-            if(Gamepad.current.bButton.isPressed) {
+            if(Gamepad.current.bButton.wasPressedThisFrame) {
                 mode = MODE.STORY;
                 parent.SetBool("fade",true);
                 normal = true;
@@ -114,8 +116,9 @@ public class StageSelectController : MonoBehaviour
             
         }
         if(myPos.localPosition == Pos[1].localPosition) {
-            title.SelectSetumei(1);
-            if(Gamepad.current.bButton.isPressed) {
+            
+            if(Gamepad.current.bButton.wasPressedThisFrame) {
+                
                 mode = MODE.CHALLENGE;
                 parent.SetBool("fade", true);
                 Siabritukeru.SetActive(true);
@@ -127,7 +130,7 @@ public class StageSelectController : MonoBehaviour
     IEnumerator SibariActive() {
         yield return new WaitForSeconds(0.5f);
         //si.enabled = true;
-      
+        //parent.enabled = false;
         //myScripts.enabled = false;
     }
 }
