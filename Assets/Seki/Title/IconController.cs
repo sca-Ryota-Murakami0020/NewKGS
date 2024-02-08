@@ -27,6 +27,18 @@ public class IconController : MonoBehaviour
     [SerializeField] GameObject mode;
     Animator animator;
     [SerializeField] Animator parent;
+
+    bool rank = false;
+    public bool RANK {
+        set {
+            this.rank = value;
+        }
+        get {
+            return this.rank;
+        }
+    }
+
+    [SerializeField] Animator printObj;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,10 +54,10 @@ public class IconController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!stageFlag) {
+        if(!stageFlag && !rank) {
             IconPos();
-        }
         
+        }
 
 
         if(my.localPosition == Title[0].localPosition) {
@@ -61,11 +73,20 @@ public class IconController : MonoBehaviour
             if(Gamepad.current.bButton.wasReleasedThisFrame) {
                 //stageFlag = true;
                 //Siabritukeru.SetActive(true);
+                rank = true;
+                parent.enabled = true;
+                parent.SetBool("title", false);
             }
+       
         }
         if(titlefade) {
             mode.SetActive(true);
             titlefade = false;
+        }
+        if(rank) {
+            if(Gamepad.current.aButton.wasPressedThisFrame) {
+                printObj.SetBool("rank",true);
+            }
         }
     }
 

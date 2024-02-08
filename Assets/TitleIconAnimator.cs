@@ -5,6 +5,7 @@ using UnityEngine;
 public class TitleIconAnimator : MonoBehaviour
 {
     [SerializeField] IconController icon;
+    [SerializeField] Animator printObj;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +20,12 @@ public class TitleIconAnimator : MonoBehaviour
 
     public void OnAnimationEnd() {
         //アニメーション終了時の処理
-        icon.TITLEFADE = true;
+        if(!icon.RANK) {
+            icon.TITLEFADE = true;
+        } else {
+            printObj.enabled = true;
+            printObj.SetBool("rank",false);
+        }
         //Debug.Log("終わった");
     }
 }
