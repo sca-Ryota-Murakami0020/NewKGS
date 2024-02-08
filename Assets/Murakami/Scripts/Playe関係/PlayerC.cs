@@ -59,14 +59,22 @@ public class PlayerC : MonoBehaviour
     private Transform _transform;
     //上向きのベクトル
     private float _verticalVelocity;
+    //実行用のスピードの変数
+    private float currentSpeed = 0.0f;
+    //実行用のジャンプ力
+    private float currentJumpPower = 0.0f;
     //回転
     private float _turnVelocity;
     //滞空時間
     private float onAirTime = 0.0f;
-    //プレイヤーのスピード
-    private float _jumpSpeed;
+    //加速床用のスピード倍率
+    private float spliteSpeed = 1.0f;
+    //加速床用のジャンプ力
+    private float spliteJumpSpeed = 1.0f;
+    //加速床でジャンプしたときの重力の倍率
+    private float spliteGravity = 1.0f;
     //雨降っている判定
-    private bool isRain = true;
+    //private bool isRain = true;
     //接地判定
     private bool _isGroundedPrev;
     //トランポリンの接触判定
@@ -75,7 +83,6 @@ public class PlayerC : MonoBehaviour
     private bool doJump = false;
     //加速床に乗っている
     private bool onSprite = false;
-    private bool doPanelJump = false;
 
     //スティックの入力
     [SerializeField] private PlayerInput _playerInput;
@@ -87,11 +94,13 @@ public class PlayerC : MonoBehaviour
     #endregion
 
     #region//プロパティ
+    /*
     public bool IsRain
     {
         get { return this.isRain;}
         set { this.isRain = value;}
     }
+    */
 
     public bool IsGrand
     {
@@ -202,8 +211,8 @@ public class PlayerC : MonoBehaviour
 
         playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
         //縛りの影響を反映させる
-        playerSpeed = playerSpeed * playerManager.DefSpeedMag;
-        _jumpSpeed = defaultJumpSpeed * playerManager.DefJumpMag;
+        currentSpeed = playerSpeed * playerManager.DefSpeedMag;
+        currentJumpPower = defaultJumpSpeed * playerManager.DefJumpMag;
     }
 
     float d;
@@ -217,10 +226,10 @@ public class PlayerC : MonoBehaviour
         #region//関担当
         if(bigJump) {
             anim.SetTrigger("TrnJump");
-            _jumpSpeed = addJumpSpeed;
+            currentJumpPower = addJumpSpeed;
             _fallSpeed = 50f;
             isGrounded = false;
-            _verticalVelocity = _jumpSpeed;
+            _verticalVelocity = currentJumpPower;
             anim.SetTrigger("HighJumpAri");
             _verticalVelocity -= _gravity * Time.deltaTime;
 
@@ -236,10 +245,10 @@ public class PlayerC : MonoBehaviour
 
             if(bigJump) {
                 anim.SetTrigger("TrnJump");
-                _jumpSpeed = addJumpSpeed;
+                currentJumpPower = addJumpSpeed;
                 _fallSpeed = 50f;
                 isGrounded = false;
-                _verticalVelocity = _jumpSpeed;
+                _verticalVelocity = currentJumpPower;
                 anim.SetTrigger("HighJumpAri");
                 _verticalVelocity -= _gravity * Time.deltaTime;
 
@@ -362,14 +371,13 @@ public class PlayerC : MonoBehaviour
         {
             anim.SetTrigger("TrnJump");
             DOTween.KillAll();
-            _jumpSpeed = sliderSpeed;
+            currentJumpPower = sliderSpeed;
             playerSpeed = 10.0f;
-            _verticalVelocity = _jumpSpeed;
-            
+            _verticalVelocity = currentJumpPower;         
             
             silde = false;
         }
-        else _jumpSpeed = defaultJumpSpeed;
+        else currentJumpPower = defaultJumpSpeed;
         
         //地面orトランポリンに乗っている時または回避中以外だけ処理する
         if (!context.performed || !_characterController.isGrounded) return;
@@ -393,7 +401,6 @@ public class PlayerC : MonoBehaviour
         if(onSprite)
         {
             doJump = true;
-            doPanelJump  =true;
             //_verticalVelocity = 50.0f;
             anim.SetTrigger("PanelJump");
         }
@@ -440,7 +447,7 @@ public class PlayerC : MonoBehaviour
         // 着地する瞬間に落下の初速を指定しておく
         if (isGrounded && !_isGroundedPrev) _verticalVelocity = -_initFallSpeed;
 
-        else if (!isGrounded)
+        else if (!isGrounded && !onSprite)
         {
             // 空中にいるときは、下向きに重力加速度を与えて落下させる
             _verticalVelocity -= _gravity * Time.deltaTime;
@@ -449,41 +456,62 @@ public class PlayerC : MonoBehaviour
             if (_verticalVelocity < -_fallSpeed) _verticalVelocity = -_fallSpeed;
         }
 
+        //加速床を使用したときのジャンプをしたとき
+        else if(!isGrounded && onSprite)
+        {
+            // 空中にいるときは、下向きに重力加速度を与えて落下させる
+            _verticalVelocity -= (_gravity * Time.deltaTime) * spliteGravity;
+            var maxGravity = _fallSpeed * spliteGravity;
+            // 落下する速さ以上にならないように補正
+            if (_verticalVelocity < -maxGravity) _verticalVelocity = -maxGravity;
+        }
+
         //通常の移動
         if (gutsGaugeC.GPlam != GutsGaugeC.GutsPlam.Doing)
-            PlayerMove(playerSpeed * debufC.MoveDebufMag);
+        {
+            //加速床に乗っている時
+            if(onSprite) currentSpeed = (playerSpeed * playerManager.DefSpeedMag) * spliteSpeed;
+            else currentSpeed = playerSpeed * debufC.MoveDebufMag;
+            PlayerMove(currentSpeed);
+        }
 
         //ダッシュ中
         else if (gutsGaugeC.GPlam == GutsGaugeC.GutsPlam.Doing)
         {
             //スティックの入力があるときのみ処理を行う
-            if(_inputMove != Vector2.zero)
-                PlayerMove(dashSpeed * debufC.MoveDebufMag);
+            if (_inputMove != Vector2.zero)
+            {
+                if (onSprite) currentSpeed = (dashSpeed * playerManager.DefSpeedMag) * spliteSpeed;
+                else currentJumpPower = dashSpeed * debufC.MoveDebufMag;
+                PlayerMove(currentSpeed);
+            }
             //ボタン入力ON、スティック入力NO＝＞スタミナ減少を解除してダッシュを終了する
             else EndDash();
         }
 
         //回避が入力されたら
-        else if(avoidanceC.AvoiP == AvoidanceC.AvoiPlam.Doing 
+        else if (avoidanceC.AvoiP == AvoidanceC.AvoiPlam.Doing
             && _inputMove != Vector2.zero)
-            PlayerMove(avoidanceSpeed * debufC.MoveDebufMag);
-        
+        {
+            currentSpeed = avoidanceSpeed; //* debufC.MoveDebufMag;
+            PlayerMove(currentSpeed);
+        }
+      
         _isGroundedPrev = isGrounded;
     }
 
     //ジャンプ処理
     public void JumpPlayer()
     {
-        _verticalVelocity = _jumpSpeed * debufC.JumpDebufMag;
+        //加速床使用時
+        if(onSprite) _verticalVelocity = currentJumpPower * spliteJumpSpeed;
+        else _verticalVelocity = currentJumpPower * debufC.JumpDebufMag;
         _characterController.height = 0.5f;
     }
 
     //トランポリンジャンプ
     public void TrnJumpPlayer() 
-        => _verticalVelocity = _jumpSpeed * 2.0f * debufC.JumpDebufMag;
-
-    //
-
+        => _verticalVelocity = (currentJumpPower * 2.0f) * debufC.JumpDebufMag;
 
     //移動処理
     private void PlayerMove(float speed)//, Vector3 cameraVec
@@ -585,8 +613,7 @@ public class PlayerC : MonoBehaviour
 
     //接触処理
     private void OnTriggerEnter(Collider col)
-    {
-        
+    {       
         if(col.tag == "Ice") {
             slideFlag = true;
             _playerInput.enabled = false;
@@ -598,7 +625,7 @@ public class PlayerC : MonoBehaviour
             for(int u = 0; u < kaidan.Length; u++) {
                 kaidan[u].enabled = false;
             }
-             */
+            */
         }
 
         //トランポリン
@@ -704,18 +731,29 @@ public class PlayerC : MonoBehaviour
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         //地面への着地アニメーションを呼び出す
-        if(hit.gameObject.tag == "Ground")
+        if(hit.gameObject.tag == "Ground" && !isGrounded)
         {
+            isGrounded = _characterController.isGrounded;
             _characterController.height = 0.95f;
             if(!_characterController.isGrounded) {
                 jumpCout = 0;
             }
-            if(onAirTime <= 2.0f || doPanelJump)
+            //空中待機時間が一定値以下なら
+            if(onAirTime <= 2.0f && !onSprite)
             anim.SetTrigger("Landing");
-            else
-            anim.SetTrigger("HighLanding");
+            //一定値以上、または加速床ジャンプでの着地なら
+            else if(onAirTime > 2.0f || onSprite)
+            {
+                anim.SetTrigger("HighLanding");
+                if (onSprite)
+                {
+                    onSprite = false;
+                    spliteJumpSpeed = 1.0f;
+                    spliteGravity = 1.0f;
+                }
+            }
             onAirTime = 0.0f;
-            doJump = false;
+            doJump = false;        
         }
 
         //ゴール
@@ -741,6 +779,18 @@ public class PlayerC : MonoBehaviour
                     debufC.ActiveJumpDebuf(trapC.DebufTime, trapC.DebufMag);
                     break;
             }
+        }
+
+        //加速床
+        if(hit.gameObject.tag == "SpritePanel" && !onSprite)
+        {
+            Debug.Log("取得");
+            //関数を取得
+            SpliteC spliteC = hit.gameObject.GetComponent<SpliteC>();
+            spliteSpeed = spliteC.AddSpeedMag;
+            spliteJumpSpeed = spliteC.AddJumpMag;
+            spliteGravity = spliteC.SubGravity;
+            onSprite = true;
         }
     }
     #endregion
