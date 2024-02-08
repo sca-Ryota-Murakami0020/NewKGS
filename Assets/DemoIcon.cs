@@ -81,8 +81,7 @@ public class DemoIcon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        Debug.Log("縛りカウント"+ leftright);
+     
         levelCopy =levelCount;
         levelText.text = "(レベル"+ (levelCopy + 1)+")";
         if(sousa) { 
