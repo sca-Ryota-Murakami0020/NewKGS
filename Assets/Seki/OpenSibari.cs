@@ -11,6 +11,7 @@ public class OpenSibari : MonoBehaviour
     [SerializeField] StageSelectController stage;
     [SerializeField] Animator title;
     [SerializeField] GameObject playerImage;
+   
     public void OnStartAnim() {
         titleManager.SelectSetumei(2);
         demoIcon.enabled = true;
@@ -22,6 +23,7 @@ public class OpenSibari : MonoBehaviour
         Siabritukeru.SetActive(false);
         if(!demoIcon.GO) {
             stageMode.SetActive(true);
+            
             stage.enabled = true;
         }
         
