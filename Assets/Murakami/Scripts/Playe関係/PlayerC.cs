@@ -506,7 +506,7 @@ public class PlayerC : MonoBehaviour
         //加速床使用時
         if(onSprite) _verticalVelocity = currentJumpPower * spliteJumpSpeed;
         else _verticalVelocity = currentJumpPower * debufC.JumpDebufMag;
-        _characterController.height = 0.5f;
+        //_characterController.height = 0.5f;
     }
 
     //トランポリンジャンプ
