@@ -18,11 +18,11 @@ public class StageSelectController : MonoBehaviour
     bool normal = false;
     public bool NORMAL {
         set {
-            this.normal = value;
+         this.normal = value;
         }
-        get {
-            return this.normal;
-        }
+       get {
+           return this.normal;
+      }
     }
 
     StageSelectController myScripts;
@@ -41,11 +41,21 @@ public class StageSelectController : MonoBehaviour
     
     [SerializeField] IconController icon;
     [SerializeField] GameObject playerImage;
+    bool modeFlag;
+    public bool MODEFLAG {
+        set {
+            this.modeFlag = value;
+        }
+        get {
+            return this.modeFlag;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
         icon.enabled = false;
         parent.enabled = true;
+        modeFlag = false;
         animator = GetComponent<Animator>();
         mode = MODE.NULL;
         myScripts = this.GetComponent<StageSelectController>();
@@ -62,10 +72,11 @@ public class StageSelectController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    
-        StageIconMove();
-        StageSelect();
-      
+        if(!modeFlag) {
+            StageIconMove();
+            StageSelect();
+        }
+        
     }
 
     void StageIconMove() {
@@ -82,6 +93,8 @@ public class StageSelectController : MonoBehaviour
         }
         if(Gamepad.current.aButton.wasPressedThisFrame)
         {
+            normal = false;
+            modeFlag = true;
             playerImage.SetActive(false);
             parent.SetBool("fade", true);
         }
@@ -100,7 +113,7 @@ public class StageSelectController : MonoBehaviour
         if(myPos.localPosition == Pos[1].localPosition) {
             title.SelectSetumei(1);
             if(Gamepad.current.bButton.wasPressedThisFrame) {
-                
+                //normal = true;
                 mode = MODE.CHALLENGE;
                 parent.SetBool("fade", true);
                 

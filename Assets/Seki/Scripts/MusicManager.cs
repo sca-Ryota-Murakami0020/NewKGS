@@ -36,7 +36,14 @@ public class MusicManager : MonoBehaviour
             gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
             player = GameObject.Find("PlayerModel").GetComponent<PlayerC>();
         }
-        SelectMusic(SelectStageCount(stageMusic));
+        if(stageMusic == "LoadScene") {
+            for(int i = 0; i < musicObj.Length; i++) {
+                musicObj[i].SetActive(false);
+            }
+        } else {
+            SelectMusic(SelectStageCount(stageMusic));
+        }
+        
     }
     int c;
     int SelectStageCount(string name) {
@@ -46,14 +53,35 @@ public class MusicManager : MonoBehaviour
                 break;
             case "Murakami":
                 if(gameManager.GAMEOVER) {
-                    c = 3;
+                    c = 5;
                 }
                 else if(player.ALLGOAL) {
-                    c = 2;
+                    c = 4;
                 }
                 else {
                     c = 1;
                 }
+                break;
+            case "未来ステージ":
+                if(gameManager.GAMEOVER) {
+                    c = 5;
+                } else if(player.ALLGOAL) {
+                    c = 4;
+                } else {
+                    c = 2;
+                }
+                break;
+            case "過去ステージ":
+                if(gameManager.GAMEOVER) {
+                    c = 5;
+                } else if(player.ALLGOAL) {
+                    c = 4;
+                } else {
+                    c = 3;
+                }
+                break;
+            case "MojiHyouji":
+                c = 6;
                 break;
         }
         return c;
