@@ -67,15 +67,6 @@
                     "processors": "",
                     "interactions": "Press(behavior=1)",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "ChangeShit",
-                    "type": "Button",
-                    "id": "85aad83f-0f4d-40c6-a926-c2e7119a680b",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -340,17 +331,6 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "EndDash",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "90602d5c-d79e-43e0-98f6-b32fafec204d",
-                    "path": "<Gamepad>/buttonEast",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "ChangeShit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
