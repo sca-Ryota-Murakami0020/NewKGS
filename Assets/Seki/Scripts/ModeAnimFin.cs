@@ -26,7 +26,7 @@ public class ModeAnimFin : MonoBehaviour
         
         if(!stageSelect.NORMAL && StageSelectController.mode != StageSelectController.MODE.CHALLENGE) {
             icon.enabled = true;
- 
+            ModeUi.SetActive(false);
             iconAnim.SetBool("title", true);
         } 
         else if(StageSelectController.mode == StageSelectController.MODE.CHALLENGE) {

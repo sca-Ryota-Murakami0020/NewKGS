@@ -84,6 +84,7 @@ public class TitleManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log(stageSelect.NORMAL);
         if(Icon.STAGE) {
             Icon.enabled = true;
             playerImage.SetActive(true);
@@ -92,20 +93,11 @@ public class TitleManager : MonoBehaviour
             //IconObject.SetActive(false);
             Icon.STAGE = false;
         }
-        /*
-        if(sibaritukeru.SIBARIFLAG) {
-            SibaritukeruObject.SetActive(false);
-            sibaritukeru.SIBARIFLAG = false;
-        }
 
-        
-        if(sibaritukeru.NO) {
-            SelectSetumei(4);
-            //FadeOut();
-            sibaritukeru.enabled = false;
-            //fade = true;
+        if(Icon.STORY) {
+            title.enabled = false;
         }
-        */
+        
         if(demoIcon.GO) {
             SelectSetumei(4);
             
@@ -150,9 +142,9 @@ public class TitleManager : MonoBehaviour
         alfa += fadeSpeed;
         SetAlpha();
         if(alfa >= 1.0f) {
-            sibaritukeru.NO = false;
-            hontoi.YES = false;
-            stageSelect.NORMAL = false;
+            //sibaritukeru.NO = false;
+            //hontoi.YES = false;
+            //stageSelect.NORMAL = false;
             fade = false;
             if(StageSelectController.mode == StageSelectController.MODE.STORY) {
                 sceneName = "MojiHyouji";
