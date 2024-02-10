@@ -9,6 +9,15 @@ using static UnityEditor.PlayerSettings;
 
 public class RunOnlyPlayerC : MonoBehaviour
 {
+    bool goal = false;
+    public bool GOAL {
+        set {
+            this.goal = value;
+        }
+        get {
+            return this.goal;
+        }
+    }
     [Header("回避用スクリプト"),SerializeField]
     private AvoidanceC avoC;
     [SerializeField]
@@ -35,6 +44,7 @@ public class RunOnlyPlayerC : MonoBehaviour
     #endregion
 
     [SerializeField] Rigidbody rb;
+    bool y = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -49,13 +59,23 @@ public class RunOnlyPlayerC : MonoBehaviour
     {
 
         //inputMoveVelocity = new Vector2(aa,bb);
-        Debug.Log(myPos.y);
        
-        if(Input.GetKeyDown(KeyCode.O)) {
+       
+        if(Input.GetKeyDown("joystick button 0")) {
+           y = true;
+            onGround = false;
+        }
+        if(y&& myPos.y < 10.0f) {
             this.rb.AddForce(transform.up * jumpForce);
         }
 
-       // }
+        if(y && myPos.y > 10.0f)
+            this.rb.AddForce(transform.up * -jumpForce);
+        //y= false;
+        // }
+        if(onGround) {
+            y = false;
+        }
 
         if(!onGround)
         {
@@ -63,7 +83,10 @@ public class RunOnlyPlayerC : MonoBehaviour
             
         } 
             
-            MoveObjects();
+        //if(onGround) {
+           MoveObjects();
+        //}
+        
        //}
     }
 
@@ -147,24 +170,26 @@ public class RunOnlyPlayerC : MonoBehaviour
         }*/
         myPos = this.transform.position;
         //ボタン入力処理
+        if(onGround) { 
         inputMoveVelocity.x = Input.GetAxis("Horizontal");
         if(inputMoveVelocity.x > 0 && myPos.x <= 6.0f) {
-            myPos.x += 0.3f;
+            myPos.x += 0.08f;
             //this.transform.position += new Vector3(inputMoveVelocity.x, inputJumpVelocity, playerSpeed) * playerSpeed;
         }
         else if(inputMoveVelocity.x < 0 && myPos.x >= -6.0f) {
-            myPos.x -= 0.3f;
+            myPos.x -= 0.08f;
         }
-        myPos.z += 0.05f;
+        }
+        myPos.z += 0.1f;
 
-        if(Input.GetKeyDown("joystick button 0")) {
+       // if(Input.GetKeyDown("joystick button 0")) {
             //myRigidbody.useGravity = false;
-            if(onGround) {
-                jump = true;
+         //   if(onGround) {
+           //     jump = true;
                 
-            }
+            //}
             //JumpRunPlayer();
-        }
+        //}
         if(jump && myPos.y < 10.0f) {
             //this.rb.AddForce(transform.up * jumpForce);
         }
@@ -236,6 +261,7 @@ public class RunOnlyPlayerC : MonoBehaviour
     {
         if(other.gameObject.tag == "Goal")
         {
+            goal = true;
             //Debug.Log("omedetou");
             thirdGM.StageClear();
 

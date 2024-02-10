@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class ThirdStageGM : MonoBehaviour
@@ -47,10 +48,15 @@ public class ThirdStageGM : MonoBehaviour
         get { return this.playerJumpPow;}
     }
 
+    //[SerializeField] GameObject gameClear;
+    //[SerializeField] GameObject gameOver;
+
+    
+
     // Start is called before the first frame update
     void Start()
     {
-
+       
         //èâä˙ílÇÃãLâØ
         defMove = playerSpeed;
         defJump = playerJumpPow;
@@ -117,6 +123,14 @@ public class ThirdStageGM : MonoBehaviour
     public void StageClear()
     {
         SousaUIContorller.stageClear++;
-        SceneManager.LoadScene("LoadScene");
+        if(StageSelectController.mode == StageSelectController.MODE.STORY) {
+            TitleManager.sceneName = "MojiHyouji";
+            //SceneManager.LoadScene("LoadScene");
+        }
+        else if(StageSelectController.mode == StageSelectController.MODE.CHALLENGE) {
+            TitleManager.sceneName = "Masaki";
+        }
+        
+        
     }
 }
