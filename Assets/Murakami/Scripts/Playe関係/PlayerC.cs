@@ -225,8 +225,6 @@ public class PlayerC : MonoBehaviour
     {
         //滞空時間計算
         if (!_isGroundedPrev) CountOnAir();
-        //Debug.Log("OnSplite:" + onSplite);
-        Debug.Log($"S:{spliteSpeed}, J:{spliteJumpSpeed}, G:{spliteGravity}");
 
         #region//関担当
         if (bigJump) {
@@ -459,7 +457,6 @@ public class PlayerC : MonoBehaviour
             //通常の落下&& !onSplite && !fallStartSplite
             else
             {
-                Debug.Log("普通の落下");
                 // 空中にいるときは、下向きに重力加速度を与えて落下させる
                 _verticalVelocity -= _gravity * Time.deltaTime;
 
@@ -471,7 +468,6 @@ public class PlayerC : MonoBehaviour
         //加速床を使用したときのジャンプをしたとき if(!isGrounded && onSplite && jumpCount == 1 && fallStartSplite)
         else
         {
-            Debug.Log("加速用落下");
             // 空中にいるときは、下向きに重力加速度を与えて落下させる
             _verticalVelocity -= (_gravity * Time.deltaTime) * spliteGravity;
             var maxGravity = _fallSpeed * spliteGravity;
@@ -511,10 +507,7 @@ public class PlayerC : MonoBehaviour
 
         //加速床から離れた時の移動 && jumpCount == 1 
         if (onSplite && _inputMove != Vector2.zero && gutsGaugeC.GPlam == GutsGaugeC.GutsPlam.Doing)
-        {
-            //Debug.Log("空中移動中");
             currentSpeed = (dashSpeed * playerManager.DefSpeedMag) * spliteSpeed;
-        }
 
         _isGroundedPrev = isGrounded; 
     }
@@ -536,11 +529,8 @@ public class PlayerC : MonoBehaviour
         float pow = 0.0f;
         if (jumpCount == 0)
         {
-            Debug.Log("倍率："+ spliteJumpSpeed);
             pow = currentJumpPower * spliteJumpSpeed;
-            //Debug.Log("計算語" + pow);
             _verticalVelocity = pow;
-            Debug.Log($"pow:{pow},v:{_verticalVelocity}");
         }
         StartCoroutine(StartFallSplite());
     }
@@ -712,7 +702,6 @@ public class PlayerC : MonoBehaviour
             spliteSpeed = spliteC.AddSpeedMag;
             spliteJumpSpeed = spliteC.AddJumpMag;
             spliteGravity = spliteC.SubGravity;
-            Debug.Log($"S:{spliteSpeed}, J:{spliteJumpSpeed}, G:{spliteGravity}");
         }
     }
 
@@ -780,7 +769,6 @@ public class PlayerC : MonoBehaviour
 
                 if (onSplite)
                 {
-                    Debug.Log("Ground着地判定");
                     onSplite = false;
                     StartCoroutine(ResetMag());
                 }
@@ -800,11 +788,10 @@ public class PlayerC : MonoBehaviour
 
                     if (onSplite)
                     {
-                        //Debug.Log("着地判定");
                         onSplite = false;
                         StartCoroutine(ResetMag());
                     }
-                }              
+                }
             }
 
             onAirTime = 0.0f;
