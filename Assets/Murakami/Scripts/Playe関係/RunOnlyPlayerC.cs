@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using static UnityEditor.PlayerSettings;
 
 public class RunOnlyPlayerC : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class RunOnlyPlayerC : MonoBehaviour
 
     #region//スピード等のパラメータ関係
     [SerializeField] private Animator anim;
-    [SerializeField] private PlayerInput playerInput;
+    //[SerializeField] private PlayerInput playerInput;
     [SerializeField] private float _gravity;
     [SerializeField] private float inputFallSpeed;
     [SerializeField] private float fallSpeed;
@@ -33,25 +34,37 @@ public class RunOnlyPlayerC : MonoBehaviour
     private Vector2 inputMoveVelocity = Vector2.zero;
     #endregion
 
+    [SerializeField] Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
+       
         playerSpeed = thirdGM.PlayerSpeed;
         jumpPow = thirdGM.PlayerJumpPow;
     }
 
+    float jumpForce = 10.0f;
     // Update is called once per frame
     void Update()
     {
 
         //inputMoveVelocity = new Vector2(aa,bb);
-        //Debug.Log(inputMoveVelocity);
-        Debug.Log(onGround);
-        MoveObjects();
+        Debug.Log(myPos.y);
+       
+        if(Input.GetKeyDown(KeyCode.O)) {
+            this.rb.AddForce(transform.up * jumpForce);
+        }
+
+       // }
+
         if(!onGround)
         {
             DrowFootRay();
-        }
+            
+        } 
+            
+            MoveObjects();
+       //}
     }
 
     //移動入力処理
@@ -111,6 +124,11 @@ public class RunOnlyPlayerC : MonoBehaviour
         inputJumpVelocity = jumpPow;
     }
 
+  
+    Vector3 myPos;
+    
+    
+    bool jump = false;
     //プレイヤーの前進処理
     private void MoveObjects()
     {
@@ -127,23 +145,63 @@ public class RunOnlyPlayerC : MonoBehaviour
             if(inputJumpVelocity < -fallSpeed) inputJumpVelocity = -fallSpeed;
             Debug.Log("落下");
         }*/
-
+        myPos = this.transform.position;
         //ボタン入力処理
         inputMoveVelocity.x = Input.GetAxis("Horizontal");
-        if(Input.GetKeyDown("joystick button 0"))
-        {
-            JumpRunPlayer();
+        if(inputMoveVelocity.x > 0 && myPos.x <= 6.0f) {
+            myPos.x += 0.3f;
+            //this.transform.position += new Vector3(inputMoveVelocity.x, inputJumpVelocity, playerSpeed) * playerSpeed;
         }
-       // var bb = Input.GetAxis("Vertical");
-        this.transform.position += new Vector3(inputMoveVelocity.x, inputJumpVelocity, playerSpeed) * playerSpeed;
+        else if(inputMoveVelocity.x < 0 && myPos.x >= -6.0f) {
+            myPos.x -= 0.3f;
+        }
+        myPos.z += 0.05f;
+
+        if(Input.GetKeyDown("joystick button 0")) {
+            //myRigidbody.useGravity = false;
+            if(onGround) {
+                jump = true;
+                
+            }
+            //JumpRunPlayer();
+        }
+        if(jump && myPos.y < 10.0f) {
+            //this.rb.AddForce(transform.up * jumpForce);
+        }
+        else if(myPos.y > 10.0f) {
+            jump = false;
+        }
+        else if(!jump) {
+            //this.rb.AddForce(transform.up * jumpForce);
+        }
+        /*
+        if(myPos.y > 10.0f && !onGround) {
+            jump = false;
+            myPos.y -= 10.0f * Time.deltaTime;
+        }
+        */
+        this.transform.position = myPos;
+        // var bb = Input.GetAxis("Vertical");
+        //if(inputMoveVelocity.x <= 0.9f && inputMoveVelocity.x >= -0.9f) {
+        //if(myPos.x > -7.6f && myPos.x < 8.05f) {
+        //_velocity = new Vector3(inputMoveVelocity.x, _rigidbody.velocity.y, playerSpeed).normalized;
+
+        //}
+
+        //}
+
         //Debug.Log(inputMoveVelocity.x);
 
-        if(!onGround && !hitGround)
+        if(!onGround)
         {
             inputJumpVelocity -= _gravity * Time.deltaTime;
+
+            //this.transform.position += new Vector3(inputMoveVelocity.x, inputJumpVelocity , playerSpeed) * playerSpeed;
             if(inputJumpVelocity <= 0.0f) inputJumpVelocity = 0.0f;
-        }
+        } 
+        
     }
+
 
     //接触判定
     private void OnCollisionEnter(Collision collision)
@@ -153,7 +211,8 @@ public class RunOnlyPlayerC : MonoBehaviour
         {
             onGround = true;
             hitGround = true;
-
+            
+            //myRigidbody.useGravity = true;
         }           
         //何かしらのギミックに引っかかった時
         if(collision.gameObject.tag == "Trap")
@@ -169,6 +228,7 @@ public class RunOnlyPlayerC : MonoBehaviour
         {
 
             onGround = false;
+            hitGround = false;
         }
     }
 
