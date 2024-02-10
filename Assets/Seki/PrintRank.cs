@@ -27,10 +27,10 @@ public class PrintRank : MonoBehaviour
     [SerializeField] Animator titleIcon;
 
     private void Start() {
+        
+        point = 2;
 
-        point = 1000;
-
-        myName = "宮館　先生";
+        myName = "守屋";
 
         GetRanking();
 
@@ -62,7 +62,7 @@ public class PrintRank : MonoBehaviour
         //書き込み用
         for(int i = 0; i < ranking.Length; i++) {
             //取得した値とRankingの値を比較して入れ替え
-            if(_value > rankingValue[i]) {
+            if(_value >= rankingValue[i]) {
                 var change = rankingValue[i];
                 rankingValue[i] = _value;
                 _value = change;
