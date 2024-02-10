@@ -12,10 +12,12 @@ public class GameOverIcon : MonoBehaviour
     [SerializeField] Animator gameOverAnim;
     bool gameover = false;
     bool nyuryoku = false;
+    string stageName;
     // Start is called before the first frame update
     void Start() {
         my = this.GetComponent<RectTransform>();
         StartCoroutine(StartFlag());
+        stageName = SceneManager.GetActiveScene().name;
     }
 
     // Update is called once per frame
@@ -26,7 +28,7 @@ public class GameOverIcon : MonoBehaviour
 
                 if(nyuryoku && Gamepad.current.bButton.wasPressedThisFrame) {
                     gameOverAnim.SetBool("hukki", true);
-                    TitleManager.sceneName = "Murakami";
+                    TitleManager.sceneName = stageName;
                     gameover = true;
                     StartCoroutine(WaitScene());
                 }
