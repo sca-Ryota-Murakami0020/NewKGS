@@ -464,7 +464,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 1075150717430844737, guid: 77078554f4353ef43a2263f1e9e22354, type: 3}
+  m_Motion: {fileID: 1075150717430844737, guid: 878a2b078a2f984488dba5305029dbbb, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -533,7 +533,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Landing
+    m_ConditionEvent: HighLanding
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2363679720107602908}
@@ -541,7 +541,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.21953358
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 0
   m_HasExitTime: 1
@@ -638,6 +638,12 @@ AnimatorController:
     m_Controller: {fileID: 0}
   - m_Name: PanelJump
     m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: OnPanel
+    m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
@@ -878,7 +884,7 @@ AnimatorStateMachine:
     m_Position: {x: 500, y: -760, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2363679720107602908}
-    m_Position: {x: 770, y: -760, z: 0}
+    m_Position: {x: 860, y: -760, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: 6734816916734913787}
@@ -953,6 +959,9 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: InputJump
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: OnPanel
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7103937538455623955}
