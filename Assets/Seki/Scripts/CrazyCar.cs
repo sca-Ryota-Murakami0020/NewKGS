@@ -25,9 +25,13 @@ public class CrazyCar : MonoBehaviour
     // Update is called once per frame
     void Update() {
         if(!stop  && !player.FALLING && !pause.PAUSE && !missionManager.MISSIONFLAG) {//
+            agent.speed = 2.5f;
             if(!agent.pathPending && agent.remainingDistance < 0.3f) {
                 GotoNextPoint();
             }
+        }
+        else if(missionManager.MISSIONFLAG) {
+            agent.speed = 0.0f;
         }
         
     }
