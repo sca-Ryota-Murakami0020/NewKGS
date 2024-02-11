@@ -9,6 +9,7 @@ public class PastC : MonoBehaviour
     Vector3 rotationX;
     [SerializeField] RunOnlyPlayerC runPlayer;
     Camera camera;
+    [SerializeField] ThirdStageGM manager;
     // Start is called before the first frame update
     void Start()
     {  
@@ -21,12 +22,18 @@ public class PastC : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(runPlayer.GOAL) {
+        if(runPlayer.WARP) {
             rotationX.x = 0.0f;
-            if(camera.fieldOfView != 0.0f)
-            camera.fieldOfView-=Time.deltaTime*30f;
+            if(camera.fieldOfView != 0.3f) {
+                camera.fieldOfView -= Time.deltaTime * 30f;
+            }
+            else if(camera.fieldOfView <= 0.3f) {
+                manager.NextStage();
+            }
+        } 
+        if(!runPlayer.GOAL){
+            this.transform.position = player.transform.position + offset;
         }
-        this.transform.position = player.transform.position+offset;
         this.transform.localEulerAngles = rotationX;
         /*
         if(Input.GetKeyDown(KeyCode.U)) {

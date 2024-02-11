@@ -51,7 +51,7 @@ public class ThirdStageGM : MonoBehaviour
     //[SerializeField] GameObject gameClear;
     //[SerializeField] GameObject gameOver;
 
-    
+    [SerializeField] GameObject warp;
 
     // Start is called before the first frame update
     void Start()
@@ -70,6 +70,9 @@ public class ThirdStageGM : MonoBehaviour
 
     void Updata()
     {
+        if(runPlayerC.GOAL) {
+            warp.SetActive(true);
+        }
         //if(debufMove) CountMoveDebuf();
         //if(debufJump) CountJumpDebuf();
     }
@@ -132,5 +135,9 @@ public class ThirdStageGM : MonoBehaviour
         }
         
         
+    }
+
+    public void NextStage() {
+        SceneManager.LoadScene("LoadScene");
     }
 }
