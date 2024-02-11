@@ -55,15 +55,30 @@ public class RunOnlyPlayerC : MonoBehaviour
         get {
             return this.warp;
         }
-    }    // Start is called before the first frame update
+    }    
+
+    [SerializeField] MeshCollider plane;
+    
+    // Start is called before the first frame update
     void Start()
     {
-       
+        
         playerSpeed = thirdGM.PlayerSpeed;
         jumpPow = thirdGM.PlayerJumpPow;
     }
 
     float jumpForce = 10.0f;
+
+    bool fall = false;
+    public bool FALLING {
+        set {
+            this.fall = value;
+        }
+        get {
+            return this.fall;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -93,9 +108,9 @@ public class RunOnlyPlayerC : MonoBehaviour
             
         } 
             
-        if(!goal) {
+        if(!goal && !fall) {
            MoveObjects();
-        } else {
+        } else if(goal && !fall) {
             Vector3 current = this.transform.position;
             Vector3 target = goalPos.transform.position;
             float step = 2.0f * Time.deltaTime;
@@ -265,7 +280,7 @@ public class RunOnlyPlayerC : MonoBehaviour
         }
 
         if(collision.gameObject.tag == "Enemy") {
-
+            fall = true;
         }
     }
 
@@ -291,6 +306,10 @@ public class RunOnlyPlayerC : MonoBehaviour
         }
         if(other.gameObject.tag == "warp") {
             warp = true;
+        }
+        if(other.gameObject.tag == "holl") {
+            fall = true;
+            plane.enabled = false;
         }
     }
 

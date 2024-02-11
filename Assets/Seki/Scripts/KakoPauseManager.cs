@@ -47,6 +47,15 @@ public class KakoPauseManager : MonoBehaviour
     [SerializeField] GameObject[] titleBack;
 
     [SerializeField] RunOnlyPlayerC player;
+    bool load = false;
+    public bool LOAD {
+        set {
+            this.load = false;
+        }
+        get {
+            return this.load;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -99,7 +108,7 @@ public class KakoPauseManager : MonoBehaviour
                 if(Gamepad.current.bButton.wasPressedThisFrame) {
                     SousaUIContorller.stageClear = 0;
                     playerManager.ManagerRemain = 3;
-
+                    
                     TitleManager.sceneName = "Masaki";
                     SceneManager.LoadScene("LoadScene");
                 }
@@ -125,6 +134,7 @@ public class KakoPauseManager : MonoBehaviour
                 TitleLineMove(0);
                 if(Gamepad.current.bButton.wasPressedThisFrame) {
                     //playerManager.DEFRE = 3;
+                    load = false;
                     TitleManager.sceneName = stageName;
                     SceneManager.LoadScene("LoadScene");
                 }

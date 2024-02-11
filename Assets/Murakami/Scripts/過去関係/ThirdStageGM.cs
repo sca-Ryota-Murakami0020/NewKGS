@@ -51,12 +51,31 @@ public class ThirdStageGM : MonoBehaviour
     //[SerializeField] GameObject gameClear;
     //[SerializeField] GameObject gameOver;
 
-    [SerializeField] GameObject warp;
+    [SerializeField] Image divedPanel;
+    float fadeSpeed = 0.02f;
+    float P_red, P_green, P_blue, P_alfa;
 
+    [SerializeField] GameObject warp;
+    Vector3 dessPosition;
+    [SerializeField] GameObject zankiIocn;
+    Text zankiIconText;
+    [SerializeField] GameObject missText;
+    [SerializeField] GameObject playerObject;
+    bool fadeIn = false;
+    [SerializeField] MeshCollider plane;
+    bool GameOver = false;
+    public bool GAMEOVER {
+        set {
+            this.GameOver = value;
+        }
+        get {
+            return this.GameOver;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
-       
+        dessPosition = playerObject.transform.position;
         //初期値の記憶
         defMove = playerSpeed;
         defJump = playerJumpPow;
@@ -76,6 +95,128 @@ public class ThirdStageGM : MonoBehaviour
         //if(debufMove) CountMoveDebuf();
         //if(debufJump) CountJumpDebuf();
     }
+
+    private void FixedUpdate() {
+        if(!fadeIn && (runPlayerC.FALLING || runPlayerC.WARP)) {
+            FadeOut();
+        }
+    }
+
+    void FadeOut() {
+        if(runPlayerC.FALLING) {
+            
+            if(!runPlayerC.WARP) {
+                StartCoroutine(WaitInoti());
+            }
+
+            if(P_alfa < 1.0f) {
+                P_alfa += fadeSpeed;
+                SetAlpha();
+            } else if(P_alfa >= 1.0f) {
+                fadeIn = true;
+
+            }
+        }
+        if(runPlayerC.WARP) {
+            if(P_alfa < 1.0f) {
+                P_alfa += fadeSpeed;
+                SetAlpha();
+            } else if(P_alfa >= 1.0f) {
+                TitleManager.sceneName = "MojiHyouji";
+                SceneManager.LoadScene("LoadScene");
+            }
+        }
+
+    }
+    IEnumerator WaitInoti() {
+        if(currentRemain != 0) {
+            missText.SetActive(true);
+            yield return new WaitForSeconds(2.0f);
+           
+
+            plane.enabled = true;
+
+            RevivePlayer();
+
+            missText.SetActive(false);
+            zankiIocn.SetActive(true);
+            zankiIocn.SetActive(true);
+            zankiIconText.text = "×" + currentRemain;
+            List<IEnumerator> ie = new List<IEnumerator>();
+            ie.Add(WaitU());
+            foreach(IEnumerator item in ie) {
+                StartCoroutine(item);
+
+                yield return item.Current;// <===ここが重要
+            }
+            yield return null;
+        } else {
+            GameOver = true;
+        }
+    }
+
+    bool remain = false;
+
+    IEnumerator WaitU() {
+        yield return new WaitForSeconds(1.0f);
+        if(!remain) {
+            playerManager.ManagerRemain--;
+            currentRemain--;
+            remain = true;
+        }
+        
+        runPlayerC.FALLING = false;
+        
+        if(!GameOver) {
+
+            List<IEnumerator> ie = new List<IEnumerator>();
+            ie.Add(WaitFadeIn());
+            foreach(IEnumerator item in ie) {
+                StartCoroutine(item);
+                yield return item.Current;// <===ここが重要
+            }
+            yield return null;
+        } else {
+            //GameOverActive();
+            //g = true;
+            yield break;
+        }
+    }
+
+    IEnumerator WaitFadeIn() {
+        yield return new WaitForSeconds(1.0f);
+
+        FadeIn();
+    }
+
+    void FadeIn() {
+        zankiIocn.SetActive(false);
+
+        if(P_alfa > 0.0f) {
+            P_alfa -= fadeSpeed;
+            SetAlpha();
+        }
+
+        if(P_alfa <= 0.0f) {
+            fadeIn = false;
+            remain = false;
+        }
+    }
+
+    void SetAlpha() {
+        divedPanel.color = new Color(P_red, P_green, P_blue, P_alfa);
+    }
+
+    /// <summary>
+    /// 残機があった場合の生き返り関数
+    /// </summary>
+    /// <param name="recount">チェックポイントの数</param>
+    public void RevivePlayer() {
+        if(currentRemain != 0 && playerManager.ManagerRemain != 0) {
+            playerObject.transform.position = dessPosition;
+        }
+    }
+
 
     //開始（動き）
     public void DebufMoveSpeed(float mag)
