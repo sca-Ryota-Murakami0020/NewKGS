@@ -70,14 +70,14 @@ public class ExMissionManager : MonoBehaviour
         if(Gamepad.current.bButton.wasPressedThisFrame) {
             player.enabled = true;
             cinema.SetActive(true);
-            mission.SetBool("Mission", true);
+            mission.SetBool("book", true);
             StartCoroutine(NotUI());
         }
     }
 
     IEnumerator NotUI() {
         yield return new WaitForSeconds(1.0f);
-        mission.SetBool("Mission", false);
+        mission.SetBool("book", false);
         mission.enabled = false;
         missionUI.SetActive(false);
     }

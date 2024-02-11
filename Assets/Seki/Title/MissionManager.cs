@@ -185,7 +185,7 @@ public class MissionManager : MonoBehaviour
         if(Gamepad.current.bButton.wasPressedThisFrame) {
             player.enabled = true;
             cinema.SetActive(true);
-            mission.SetBool("Mission",true);
+            mission.SetBool("book",true);
             StartCoroutine(NotUI());
         }
         }
@@ -284,8 +284,8 @@ public class MissionManager : MonoBehaviour
     }
 
     IEnumerator NotUI() {
-        yield return new WaitForSeconds(1.0f);
-        mission.SetBool("Mission", false);
+        yield return new WaitForSeconds(2.0f);
+        mission.SetBool("book", false);
         mission.enabled = false;
         missionUI.SetActive(false);
         missionFlag = false;
