@@ -45,7 +45,17 @@ public class RunOnlyPlayerC : MonoBehaviour
 
     [SerializeField] Rigidbody rb;
     bool y = false;
-    // Start is called before the first frame update
+
+    [SerializeField] GameObject goalPos;
+    bool warp = false;
+    public bool WARP {
+        set {
+            this.warp = value;
+        }
+        get {
+            return this.warp;
+        }
+    }    // Start is called before the first frame update
     void Start()
     {
        
@@ -83,11 +93,20 @@ public class RunOnlyPlayerC : MonoBehaviour
             
         } 
             
-        //if(onGround) {
+        if(!goal) {
            MoveObjects();
-        //}
+        } else {
+            Vector3 current = this.transform.position;
+            Vector3 target = goalPos.transform.position;
+            float step = 2.0f * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(current, target, step);
+        }
         
        //}
+    }
+
+    void GoalMove() {
+
     }
 
     //à⁄ìÆì¸óÕèàóù
@@ -244,6 +263,10 @@ public class RunOnlyPlayerC : MonoBehaviour
         {
 
         }
+
+        if(collision.gameObject.tag == "Enemy") {
+
+        }
     }
 
     //ó£ÇÍÇΩîªíË
@@ -265,6 +288,9 @@ public class RunOnlyPlayerC : MonoBehaviour
             //Debug.Log("omedetou");
             thirdGM.StageClear();
 
+        }
+        if(other.gameObject.tag == "warp") {
+            warp = true;
         }
     }
 
