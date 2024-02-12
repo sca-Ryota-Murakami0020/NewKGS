@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using static UnityEditor.PlayerSettings;
+using TMPro;
 
 public class ThirdStageGM : MonoBehaviour
 {
@@ -13,6 +16,14 @@ public class ThirdStageGM : MonoBehaviour
     //private TMP_Text remainText;
     //実行中の残機
     private int currentRemain = 0;
+    public int CURRENTREMAIN {
+        set {
+            this.currentRemain = value;
+        }
+        get {
+            return this.currentRemain;
+        }
+    }
     //残機用のアニメーション
     [SerializeField]
     private Animator remainAni;
@@ -48,17 +59,17 @@ public class ThirdStageGM : MonoBehaviour
         get { return this.playerJumpPow;}
     }
 
-    //[SerializeField] GameObject gameClear;
-    //[SerializeField] GameObject gameOver;
+    [SerializeField] GameObject gameClear;
+    [SerializeField] GameObject gameOverthing;
 
     [SerializeField] Image divedPanel;
     float fadeSpeed = 0.02f;
     float P_red, P_green, P_blue, P_alfa;
 
-    [SerializeField] GameObject warp;
+    
     Vector3 dessPosition;
     [SerializeField] GameObject zankiIocn;
-    Text zankiIconText;
+    [SerializeField]Text zankiIconText;
     [SerializeField] GameObject missText;
     [SerializeField] GameObject playerObject;
     bool fadeIn = false;
@@ -72,6 +83,7 @@ public class ThirdStageGM : MonoBehaviour
             return this.GameOver;
         }
     }
+    [SerializeField] GameObject overPlayer;
     // Start is called before the first frame update
     void Start()
     {
@@ -87,24 +99,20 @@ public class ThirdStageGM : MonoBehaviour
         currentRemain = playerManager.ManagerRemain;
     }
 
-    void Updata()
-    {
-        if(runPlayerC.GOAL) {
-            warp.SetActive(true);
-        }
-        //if(debufMove) CountMoveDebuf();
-        //if(debufJump) CountJumpDebuf();
-    }
-
     private void FixedUpdate() {
         if(!fadeIn && (runPlayerC.FALLING || runPlayerC.WARP)) {
+            
             FadeOut();
+        }
+        if(GameOver) {
+            overPlayer.SetActive(true);
+            gameOverthing.SetActive(true);
         }
     }
 
     void FadeOut() {
         if(runPlayerC.FALLING) {
-            
+            runPlayerC.enabled = false;
             if(!runPlayerC.WARP) {
                 StartCoroutine(WaitInoti());
             }
@@ -141,6 +149,7 @@ public class ThirdStageGM : MonoBehaviour
             missText.SetActive(false);
             zankiIocn.SetActive(true);
             zankiIocn.SetActive(true);
+            runPlayerC.enabled = true;
             zankiIconText.text = "×" + currentRemain;
             List<IEnumerator> ie = new List<IEnumerator>();
             ie.Add(WaitU());
@@ -151,6 +160,7 @@ public class ThirdStageGM : MonoBehaviour
             }
             yield return null;
         } else {
+            //Debug.Log("dd");
             GameOver = true;
         }
     }

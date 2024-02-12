@@ -60,7 +60,7 @@ public class ObjectMarker : MonoBehaviour
             StartCoroutine(WaitFlag());
         }
         if(gameManager.GAMEOVER) {
-            //targetObj.enabled = false;
+            targetObj.enabled = false;
             //parent.renderMode = RenderMode.ScreenSpaceCamera;
         }
     }

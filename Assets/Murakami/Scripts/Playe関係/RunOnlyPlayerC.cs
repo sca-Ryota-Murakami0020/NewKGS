@@ -38,6 +38,15 @@ public class RunOnlyPlayerC : MonoBehaviour
     private float inputJumpVelocity = 0.0f;
     private int jumpCount = 0;
     private bool onGround = false;
+    public bool ONGROUND {
+        set {
+            this.onGround = value;
+        }
+        get {
+            return this.onGround;
+        }
+    }
+
     private bool hitGround = false;
 
     private Vector2 inputMoveVelocity = Vector2.zero;
@@ -58,7 +67,8 @@ public class RunOnlyPlayerC : MonoBehaviour
     }    
 
     [SerializeField] MeshCollider plane;
-    
+    [SerializeField] KakoPauseManager pause;
+    [SerializeField] ThirdStageGM gameManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -79,28 +89,16 @@ public class RunOnlyPlayerC : MonoBehaviour
         }
     }
 
+    [SerializeField] GameObject warpObj;
+
     // Update is called once per frame
     void Update()
     {
-
+       
         //inputMoveVelocity = new Vector2(aa,bb);
        
-       
-        if(Input.GetKeyDown("joystick button 0")) {
-           y = true;
-            onGround = false;
-        }
-        if(y&& myPos.y < 10.0f) {
-            this.rb.AddForce(transform.up * jumpForce);
-        }
 
-        if(y && myPos.y > 10.0f)
-            this.rb.AddForce(transform.up * -jumpForce);
-        //y= false;
-        // }
-        if(onGround) {
-            y = false;
-        }
+        
 
         if(!onGround)
         {
@@ -108,12 +106,27 @@ public class RunOnlyPlayerC : MonoBehaviour
             
         } 
             
-        if(!goal && !fall) {
+        if(!goal && !fall && !pause.PAUSE) {
            MoveObjects();
+            if(Input.GetKeyDown("joystick button 0")) {
+                y = true;
+                onGround = false;
+            }
+            if(y && myPos.y < 10.0f) {
+                this.rb.AddForce(transform.up * jumpForce);
+            }
+
+            if(y && myPos.y > 10.0f)
+                this.rb.AddForce(transform.up * -jumpForce);
+            //y= false;
+            // }
+            if(onGround) {
+                y = false;
+            }
         } else if(goal && !fall) {
             Vector3 current = this.transform.position;
             Vector3 target = goalPos.transform.position;
-            float step = 2.0f * Time.deltaTime;
+            float step = 10.0f * Time.deltaTime;
             transform.position = Vector3.MoveTowards(current, target, step);
         }
         
@@ -299,7 +312,9 @@ public class RunOnlyPlayerC : MonoBehaviour
     {
         if(other.gameObject.tag == "Goal")
         {
+            warpObj.SetActive(true);
             goal = true;
+            rb.useGravity = false;
             //Debug.Log("omedetou");
             thirdGM.StageClear();
 
@@ -325,7 +340,7 @@ public class RunOnlyPlayerC : MonoBehaviour
         if(!Physics.Raycast(ray, out hit, 1.2f))
         {
             hitGround = false;
-            Debug.Log("—Ž‚¿‚ë");
+          
             inputJumpVelocity = 0.0f;
         }
         if(Physics.Raycast(ray, out hit, 0.06f))
