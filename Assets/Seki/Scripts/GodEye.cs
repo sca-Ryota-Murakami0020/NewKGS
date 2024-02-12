@@ -7,6 +7,7 @@ public class GodEye : MonoBehaviour
 {
     //[SerializeField] GameObject[] godObj;
     // Start is called before the first frame update
+    [SerializeField] GameObject godEye;
     void Start()
     {
         /*
@@ -20,7 +21,7 @@ public class GodEye : MonoBehaviour
     void Update()
     {
         if(Gamepad.current.leftShoulder.wasPressedThisFrame) {
-     
+            godEye.SetActive(true);
             /*
             for(int i = 0; i < godObj.Length; i++) {
                 godObj[i].SetActive(true);
@@ -28,7 +29,7 @@ public class GodEye : MonoBehaviour
             */
         }
         if(Gamepad.current.leftShoulder.wasReleasedThisFrame) {
-            
+            godEye.SetActive(false);
             /*
             for(int i = 0; i < godObj.Length; i++) {
                 godObj[i].SetActive(false);
