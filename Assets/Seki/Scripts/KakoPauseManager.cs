@@ -27,8 +27,8 @@ public class KakoPauseManager : MonoBehaviour
     float alfa;//float red,green,blue
     float P_red, P_green, P_blue, P_alfa;
 
-    float fadeSpeed = 0.04f;
-    float P_fadeSpeed = 0.01f;
+    float fadeSpeed = 0.06f;
+    float P_fadeSpeed = 0.02f;
     bool isFadeFlag = false;
 
     bool check = false;
@@ -56,6 +56,9 @@ public class KakoPauseManager : MonoBehaviour
             return this.load;
         }
     }
+    [SerializeField] Rigidbody rbPlayer;
+    [SerializeField] ThirdStageGM gameManager;
+    [SerializeField] Text pauseZaznkiText;
     // Start is called before the first frame update
     void Start()
     {
@@ -80,9 +83,11 @@ public class KakoPauseManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        pauseZaznkiText.text = "×"+ gameManager.CURRENTREMAIN;
         //ポーズ中
         if(pause && !restart) {
-
+            
             pauseIconMove();
 
             if(myPos.localPosition == Point[0].localPosition) {
@@ -117,9 +122,9 @@ public class KakoPauseManager : MonoBehaviour
         }
 
         //ポーズ中じゃない
-        else if(!restart) {
+        else if(!restart && player.ONGROUND) {
             if(Gamepad.current.startButton.isPressed) {
-               
+                rbPlayer.isKinematic = true;
                 pause = true;
                 isFadeFlag = true;
                 check = false;
@@ -248,7 +253,7 @@ public class KakoPauseManager : MonoBehaviour
         }
 
         if(alfa <= 0f && playStart) {
-
+            rbPlayer.isKinematic = false;
             pause = false;
             playStart = false;
         }

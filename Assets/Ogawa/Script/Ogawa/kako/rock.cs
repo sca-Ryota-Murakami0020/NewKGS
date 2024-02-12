@@ -11,6 +11,8 @@ public class rock : MonoBehaviour
 
     private int height = 10;
     private int distance = 60;
+    [SerializeField] RunOnlyPlayerC playerC;
+    [SerializeField] KakoPauseManager pause;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +24,7 @@ public class rock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!playerC.FALLING && !pause.PAUSE) { 
         //ä‚ÇÃê∂ê¨
         if(shotDistance < createCount)
         {
@@ -29,7 +32,7 @@ public class rock : MonoBehaviour
             createCount = 0f;
         }
         createCount += Time.deltaTime;
-
+        }
     }
 
     //ä‚Çì]Ç™Ç∑
