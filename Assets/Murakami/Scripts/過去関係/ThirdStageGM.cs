@@ -84,6 +84,7 @@ public class ThirdStageGM : MonoBehaviour
         }
     }
     [SerializeField] GameObject overPlayer;
+    [SerializeField] RezalutC rezalut;
     // Start is called before the first frame update
     void Start()
     {
@@ -108,6 +109,10 @@ public class ThirdStageGM : MonoBehaviour
             overPlayer.SetActive(true);
             gameOverthing.SetActive(true);
         }
+
+        if(runPlayerC.WARP && StageSelectController.mode == StageSelectController.MODE.CHALLENGE) {
+            gameClear.SetActive(true);
+        }
     }
 
     void FadeOut() {
@@ -130,8 +135,14 @@ public class ThirdStageGM : MonoBehaviour
                 P_alfa += fadeSpeed;
                 SetAlpha();
             } else if(P_alfa >= 1.0f) {
-                TitleManager.sceneName = "MojiHyouji";
-                SceneManager.LoadScene("LoadScene");
+                if(StageSelectController.mode == StageSelectController.MODE.STORY) {
+                    TitleManager.sceneName = "MojiHyouji";
+                    SceneManager.LoadScene("LoadScene");
+                }
+                else if(StageSelectController.mode == StageSelectController.MODE.CHALLENGE && rezalut.YES) {
+                    TitleManager.sceneName = "Masaki";
+                    SceneManager.LoadScene("LoadScene");
+                }
             }
         }
 
@@ -272,23 +283,24 @@ public class ThirdStageGM : MonoBehaviour
             return;
         }
     }
+    /*
+   //ステージ予備
+   public void StageClear()
+   {
+       SousaUIContorller.stageClear++;
+       if(StageSelectController.mode == StageSelectController.MODE.STORY) {
+           TitleManager.sceneName = "MojiHyouji";
+           //SceneManager.LoadScene("LoadScene");
+       }
+       else if(StageSelectController.mode == StageSelectController.MODE.CHALLENGE) {
+           TitleManager.sceneName = "Masaki";
+       }
 
-    //ステージ予備
-    public void StageClear()
-    {
-        SousaUIContorller.stageClear++;
-        if(StageSelectController.mode == StageSelectController.MODE.STORY) {
-            TitleManager.sceneName = "MojiHyouji";
-            //SceneManager.LoadScene("LoadScene");
-        }
-        else if(StageSelectController.mode == StageSelectController.MODE.CHALLENGE) {
-            TitleManager.sceneName = "Masaki";
-        }
-        
-        
-    }
 
-    public void NextStage() {
-        SceneManager.LoadScene("LoadScene");
-    }
+   }
+
+   public void NextStage() {
+       SceneManager.LoadScene("LoadScene");
+   }
+   */
 }

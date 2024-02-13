@@ -24,12 +24,12 @@ public class PastC : MonoBehaviour
     {
         if(runPlayer.WARP) {
             rotationX.x = 0.0f;
-            if(camera.fieldOfView != 0.3f) {
+            if(camera.fieldOfView != 0.3f && StageSelectController.mode == StageSelectController.MODE.STORY) {
                 camera.fieldOfView -= Time.deltaTime * 30f;
             }
-            else if(camera.fieldOfView <= 0.3f) {
-                manager.NextStage();
-            }
+            //else if(camera.fieldOfView <= 0.3f) {
+                //manager.NextStage();
+            //}
         } 
         if(!runPlayer.GOAL){
             this.transform.position = player.transform.position + offset;
