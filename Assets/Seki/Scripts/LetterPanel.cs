@@ -15,11 +15,24 @@ public class LetterPanel : MonoBehaviour
     int currentIndex = 0;
     int copyIndex = 0;
     NameScripts s_name;
-    [SerializeField] Text TextName;
+    bool next = false;
+
+    public bool NEXT {
+        set {
+            this.next = value;
+        }
+        get {
+            return this.next;
+        }
+    }
+    //[SerializeField] Text TextName;
+
+    [SerializeField] MojiManager moji;
+
     // Start is called before the first frame update
     void Start()
     {
-        TextName = TextName.GetComponent<Text>();
+        //TextName = TextName.GetComponent<Text>();
         s_name = nameText.GetComponent<NameScripts>();
         //í«â¡Å@ListÇèâä˙âª
         letters = new List<Letter>();
@@ -42,11 +55,12 @@ public class LetterPanel : MonoBehaviour
         _letterObj.SetLetter(_l);
     }
    
-    bool next = false;
+    
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(currentIndex);
+
+        if(moji.WRITE) { 
         if(Gamepad.current.dpad.right.wasPressedThisFrame) {
            //if(copyIndex != 60 && copyIndex != 64) { 
             currentIndex++;
@@ -95,13 +109,14 @@ public class LetterPanel : MonoBehaviour
 
         }
         if(Gamepad.current.xButton.wasPressedThisFrame) {
-            TextName.text = "";
+            //TextName.text = "";
         }
 
         if(Gamepad.current.bButton.wasPressedThisFrame) {
             if(s_name.MYNAME.Length <= maxNameLength) {
                 if(letters[copyIndex].SelectLetter() == "åàíË") {
                     next = true;
+                    moji.WRITE = false;
                 }
             }
             if(s_name.MYNAME.Length < maxNameLength) {
@@ -117,12 +132,6 @@ public class LetterPanel : MonoBehaviour
                 nameText.text = s_name.MYNAME;
                 }
             }
-            
-            
-                if(next) {
-                TextName.text = s_name.MYNAME;
-                next = false;
-            }
 
         }
 
@@ -131,6 +140,7 @@ public class LetterPanel : MonoBehaviour
                 s_name.MYNAME = s_name.MYNAME.Remove(s_name.MYNAME.Length - 1);
             }
             nameText.text = s_name.MYNAME;
+        }
         }
     }
 

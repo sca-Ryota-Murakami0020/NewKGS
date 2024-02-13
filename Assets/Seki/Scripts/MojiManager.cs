@@ -10,6 +10,18 @@ public class MojiManager : MonoBehaviour
     [SerializeField] GameObject moji2;
     int count = 0;
 
+    bool write = false;
+    public bool WRITE {
+        set {
+            this.write = value;
+        }
+        get {
+            return this.write;
+        }
+    }
+
+    [SerializeField] GameObject playerRankIn;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,5 +53,10 @@ public class MojiManager : MonoBehaviour
             moji2.SetActive(false);
            
         }
+    }
+
+    public void OnAnimFinish() {
+        playerRankIn.SetActive(true);
+        write = true;
     }
 }
