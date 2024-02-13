@@ -59,7 +59,7 @@ Material:
     - _Scale: 2.5
     - _Speed: 0.5
     - _Ste: 20
-    - _VV: 1
+    - _VV: 2
     m_Colors:
-    - _Color: {r: 121.368515, g: 3.1715157, b: 140.07547, a: 0}
+    - _Color: {r: 438.69745, g: 16.112747, b: 502.33963, a: 1}
   m_BuildTextureStacks: []
