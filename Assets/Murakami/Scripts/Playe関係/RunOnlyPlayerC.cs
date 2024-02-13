@@ -110,6 +110,8 @@ public class RunOnlyPlayerC : MonoBehaviour
            MoveObjects();
             if(Input.GetKeyDown("joystick button 0")) {
                 y = true;
+            
+                //anim.SetTrigger("DoJump");
                 onGround = false;
             }
             if(y && myPos.y < 5.0f) {
@@ -121,6 +123,7 @@ public class RunOnlyPlayerC : MonoBehaviour
             //y= false;
             // }
             if(onGround) {
+             
                 y = false;
             }
         } else if(goal && !fall) {

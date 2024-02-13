@@ -19,12 +19,14 @@ public class RezalutC : MonoBehaviour
         }
     }
 
-    //ここのスクリプトで評価をする
-
+    [SerializeField] RezalutRank rezalut;
+    [SerializeField] Text sibariText;
+    PlayerManager playerManager;
     // Start is called before the first frame update
     void Start()
     {
        re.SetFloat("_Flip", value);
+        sibariText.text = playerManager.GameLevel.ToString();
     }
 
     // Update is called once per frame
@@ -35,7 +37,7 @@ public class RezalutC : MonoBehaviour
             re.SetFloat("_Flip", value);
         }
 
-        if(push) {
+        if(push && rezalut.GO) {
             if(Gamepad.current.bButton.wasPressedThisFrame) {
                 yes = true;
                 push = false;
