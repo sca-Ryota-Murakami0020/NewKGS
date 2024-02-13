@@ -43,6 +43,8 @@ public class PlayerC : MonoBehaviour
     private GameObject popEffectObject;
     [SerializeField]
     private GameObject shotRayPosition;
+    [SerializeField]
+    private CharacterController cc;
     #endregion
 
     #region//参照するスクリプト
@@ -95,6 +97,22 @@ public class PlayerC : MonoBehaviour
     #endregion
 
     #region//enum型
+    //着地中or回避後の後隙中に動けない様にする
+    public enum MovePlayerPlam
+    {
+        Can,
+        Stopping
+    }
+    private MovePlayerPlam canMovePlayer;
+
+    //ワープ用の動き
+    public enum WarpPlam
+    {
+        Can,
+        Finish,
+        StayPortal
+    }
+    private WarpPlam playerWarpP;
     #endregion
 
     #region//プロパティ
@@ -114,6 +132,12 @@ public class PlayerC : MonoBehaviour
     public GameObject PopObject
     {
         get { return this.popEffectObject;}
+    }
+
+    public WarpPlam PlayerWarpP
+    {
+        get { return this.playerWarpP;}
+        set { this.playerWarpP = value;}
     }
     #endregion
 
@@ -446,7 +470,8 @@ public class PlayerC : MonoBehaviour
         _buttonAction = _playerInput.actions.FindAction("Jump");
         var isGrounded = _characterController.isGrounded;
 
-        if(!onSplite)
+        #region//落下処理
+        if (!onSplite)
         {
             // 着地する瞬間に落下の初速を指定しておく
             if (isGrounded && !_isGroundedPrev)
@@ -475,9 +500,12 @@ public class PlayerC : MonoBehaviour
             // 落下する速さ以上にならないように補正
             if (_verticalVelocity < -maxGravity) _verticalVelocity = -maxGravity;
         }
+        #endregion
 
+        #region//行動処理
         //通常の移動
-        if (gutsGaugeC.GPlam != GutsGaugeC.GutsPlam.Doing)
+        if (gutsGaugeC.GPlam != GutsGaugeC.GutsPlam.Doing
+            && canMovePlayer == MovePlayerPlam.Can)
         {
             //加速床に乗っている時
             currentSpeed = playerSpeed * debufC.MoveDebufMag;
@@ -485,7 +513,8 @@ public class PlayerC : MonoBehaviour
         }
 
         //ダッシュ中
-        else if (gutsGaugeC.GPlam == GutsGaugeC.GutsPlam.Doing)
+        else if (gutsGaugeC.GPlam == GutsGaugeC.GutsPlam.Doing
+            && canMovePlayer == MovePlayerPlam.Can)
         {
             //スティックの入力があるときのみ処理を行う
             if (_inputMove != Vector2.zero)
@@ -508,6 +537,7 @@ public class PlayerC : MonoBehaviour
         //加速床から離れた時の移動 && jumpCount == 1 
         if (onSplite && _inputMove != Vector2.zero && gutsGaugeC.GPlam == GutsGaugeC.GutsPlam.Doing)
             currentSpeed = (dashSpeed * playerManager.DefSpeedMag) * spliteSpeed;
+        #endregion
 
         _isGroundedPrev = isGrounded; 
     }
@@ -523,7 +553,7 @@ public class PlayerC : MonoBehaviour
     public void TrnJumpPlayer() 
         => _verticalVelocity = (currentJumpPower * 2.0f) * debufC.JumpDebufMag;
 
-    //加速床ジャンプ
+    #region//加速床ジャンプ
     public void SpliteJump()
     {
         float pow = 0.0f;
@@ -540,6 +570,8 @@ public class PlayerC : MonoBehaviour
         yield return new WaitForSeconds(10.0f);
         fallStartSplite = true;
     }
+    #endregion
+
     //移動処理
     private void PlayerMove(float speed)//, Vector3 cameraVec
     {
@@ -695,6 +727,7 @@ public class PlayerC : MonoBehaviour
             slideFlag = false;          
         }
 
+        //加速床
         if(col.tag == "SpritPanel")
         {
             onSplite = true;
@@ -703,12 +736,40 @@ public class PlayerC : MonoBehaviour
             spliteJumpSpeed = spliteC.AddJumpMag;
             spliteGravity = spliteC.SubGravity;
         }
+
+        //ワープポータル(出たところは範囲内なので出るまではワープできない様にする)
+        if(col.tag == "warp" && playerWarpP == WarpPlam.Can)
+        {
+            Debug.Log("ワープ地点到着");
+            WarpC warpC = col.gameObject.GetComponent<WarpC>();
+            //Debug.Log("関数" + warpC.RollsignPortal.gameObject.name);
+            Vector3 portalPos = warpC.RollsignPortal.transform.position;
+            Quaternion portalRot = warpC.RollsignPortal.transform.rotation;
+            //Debug.Log($"地点：{portalPos},回転：{portalRot}");
+            _playerInput.enabled = false;
+            cc.enabled = false;
+            StartCoroutine(WarpPlayer(portalPos, portalRot));
+        }
+    }
+
+    private IEnumerator WarpPlayer(Vector3 pos, Quaternion rot)
+    {
+        playerWarpP = WarpPlam.Finish;
+        this.transform.position = pos;
+        this.transform.rotation = rot;
+        yield return new WaitForSeconds(1.0f);
+        cc.enabled = true;
+        _playerInput.enabled = true;
+        Debug.Log($"現在地：{this.transform.position}");
+        //Debug.Log($"予定地：{pos}");
+        Debug.Log("ワープ完了");
+        playerWarpP = WarpPlam.StayPortal;
     }
 
     private void OnTriggerStay(Collider other)
     {
         if(other.gameObject.tag == "SpritPanel")
-            staySplite = true;
+            if(!staySplite) staySplite = true;
     }
 
     IEnumerator WaitChara() {
@@ -741,8 +802,19 @@ public class PlayerC : MonoBehaviour
             StartCoroutine(WaitJump());
             onTramporin = false;
         }
+        //加速床
         if(col.tag == "SpritPanel")
             staySplite = false;
+        if(col.tag == "warp" && playerWarpP == WarpPlam.StayPortal)
+            StartCoroutine(ChangeWarpPlam());
+    }
+
+    //ワープポータルから離れた時間の計算
+    private IEnumerator ChangeWarpPlam()
+    {
+        yield return new WaitForSeconds(1.0f);
+        playerWarpP = WarpPlam.Can;
+        Debug.Log("全てのワープ工程の完了");
     }
 
     IEnumerator WaitJump() {
