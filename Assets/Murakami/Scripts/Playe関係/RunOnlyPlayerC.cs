@@ -112,12 +112,12 @@ public class RunOnlyPlayerC : MonoBehaviour
                 y = true;
                 onGround = false;
             }
-            if(y && myPos.y < 10.0f) {
+            if(y && myPos.y < 5.0f) {
                 this.rb.AddForce(transform.up * jumpForce);
             }
 
-            if(y && myPos.y > 10.0f)
-                this.rb.AddForce(transform.up * -jumpForce);
+            if(y && myPos.y > 5.0f)
+                this.rb.AddForce(transform.up * -jumpForce*2);
             //y= false;
             // }
             if(onGround) {
@@ -237,10 +237,10 @@ public class RunOnlyPlayerC : MonoBehaviour
             //}
             //JumpRunPlayer();
         //}
-        if(jump && myPos.y < 10.0f) {
+        if(jump && myPos.y < 5.0f) {
             //this.rb.AddForce(transform.up * jumpForce);
         }
-        else if(myPos.y > 10.0f) {
+        else if(myPos.y > 5.0f) {
             jump = false;
         }
         else if(!jump) {
@@ -316,7 +316,7 @@ public class RunOnlyPlayerC : MonoBehaviour
             goal = true;
             rb.useGravity = false;
             //Debug.Log("omedetou");
-            thirdGM.StageClear();
+            //thirdGM.StageClear();
 
         }
         if(other.gameObject.tag == "warp") {
