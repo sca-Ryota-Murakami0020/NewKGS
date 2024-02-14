@@ -97,8 +97,11 @@ public class RunOnlyPlayerC : MonoBehaviour
        
         //inputMoveVelocity = new Vector2(aa,bb);
        
-
-        
+        /*デバック用
+        if(Input.GetKeyDown(KeyCode.I)) {
+            StageSelectController.mode = StageSelectController.MODE.CHALLENGE;
+        }
+        */
 
         if(!onGround)
         {
