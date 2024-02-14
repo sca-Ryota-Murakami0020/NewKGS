@@ -28,7 +28,7 @@ public class LetterPanel : MonoBehaviour
     //[SerializeField] Text TextName;
 
     [SerializeField] MojiManager moji;
-
+    [SerializeField] GameObject myName;
     // Start is called before the first frame update
     void Start()
     {
@@ -116,6 +116,7 @@ public class LetterPanel : MonoBehaviour
             if(s_name.MYNAME.Length <= maxNameLength) {
                 if(letters[copyIndex].SelectLetter() == "Œˆ’è") {
                     next = true;
+                    myName.SetActive(false);
                     moji.WRITE = false;
                 }
             }

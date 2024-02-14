@@ -9,6 +9,14 @@ public class RezalutC : MonoBehaviour
     [SerializeField] Material re;
     float value = -1.0f;
     bool push = false;
+    public bool PUSH {
+        set {
+            this.push = false;
+        }
+        get {
+            return this.push;
+        }
+    }
     bool yes = false;
     public bool YES {
         set {
@@ -26,7 +34,7 @@ public class RezalutC : MonoBehaviour
     void Start()
     {
        re.SetFloat("_Flip", value);
-        sibariText.text = playerManager.GameLevel.ToString();
+        sibariText.text = "12"; //playerManager.GameLevel.ToString()
     }
 
     // Update is called once per frame

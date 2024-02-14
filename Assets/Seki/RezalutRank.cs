@@ -45,6 +45,8 @@ public class RezalutRank : MonoBehaviour
     [SerializeField] GameObject inputName;
     [SerializeField] GameObject rankIn;
 
+    [SerializeField] RezalutC rezalutC;
+
     void Start()
     {
         playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
@@ -107,10 +109,11 @@ public class RezalutRank : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(rank) {
-            inputName.SetActive(true);
-        } else {
-            zannen.SetActive(true);
+        Debug.Log(rank);
+        if(rank && rezalutC.PUSH) {
+            StartCoroutine(waitActive(rank, rezalutC.PUSH));
+        } else if(!rank && rezalutC.PUSH){
+            StartCoroutine(waitActive(rank, rezalutC.PUSH));
         }
 
         if(letter.NEXT)
@@ -118,6 +121,15 @@ public class RezalutRank : MonoBehaviour
             rankIn.SetActive(true);
             name = userName.MYNAME;
             SetRanking(point, name);
+        }
+    }
+
+    IEnumerator waitActive(bool rank,bool push) {
+        yield return new WaitForSeconds(1.0f);
+        if(rank && push) {
+            inputName.SetActive(true);
+        } else if(!rank && push) {
+            zannen.SetActive(true);
         }
     }
 }
