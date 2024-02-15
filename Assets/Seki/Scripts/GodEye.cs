@@ -5,16 +5,16 @@ using UnityEngine.InputSystem;
 
 public class GodEye : MonoBehaviour
 {
-    //[SerializeField] GameObject[] godObj;
     // Start is called before the first frame update
     [SerializeField] GameObject godEye;
+    [SerializeField] GameObject[] warp;
+
     void Start()
     {
-        /*
-        for(int i = 0; i < godObj.Length; i++) {
-            godObj[i].SetActive(false);
-        }
-        */
+        godEye.SetActive(false);
+       for(int i = 0; i < warp.Length; i++) {
+            warp[i].SetActive(false);
+       }
     }
 
     // Update is called once per frame
@@ -22,19 +22,16 @@ public class GodEye : MonoBehaviour
     {
         if(Gamepad.current.leftShoulder.wasPressedThisFrame) {
             godEye.SetActive(true);
-            /*
-            for(int i = 0; i < godObj.Length; i++) {
-                godObj[i].SetActive(true);
+            for(int i = 0; i < warp.Length; i++) {
+                warp[i].SetActive(true);
             }
-            */
         }
+
         if(Gamepad.current.leftShoulder.wasReleasedThisFrame) {
             godEye.SetActive(false);
-            /*
-            for(int i = 0; i < godObj.Length; i++) {
-                godObj[i].SetActive(false);
+            for(int i = 0; i < warp.Length; i++) {
+                warp[i].SetActive(false);
             }
-            */
         }
     }
 }
