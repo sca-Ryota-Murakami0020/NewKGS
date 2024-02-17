@@ -806,7 +806,7 @@ public class PlayerC : MonoBehaviour
     //ワープポータルから離れた時間の計算
     private IEnumerator ChangeWarpPlam()
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1);
         playerWarpP = WarpPlam.Can;
         Debug.Log("全てのワープ工程の完了");
     }

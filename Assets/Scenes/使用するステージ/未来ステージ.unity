@@ -82870,8 +82870,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c0ba778b1731e45924b26fc2afee0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addSpeedMag: 2.3
-  addJumpMag: 2.2
+  addSpeedMag: 2.4
+  addJumpMag: 2.6
   subGravity: 0.5
 --- !u!114 &1676928319
 MonoBehaviour:
@@ -107740,9 +107740,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c0ba778b1731e45924b26fc2afee0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addSpeedMag: 3
-  addJumpMag: 3
-  subGravity: 0.4
+  addSpeedMag: 2.3
+  addJumpMag: 2.6
+  subGravity: 0.5
 --- !u!33 &4873437078196531798
 MeshFilter:
   m_ObjectHideFlags: 0
