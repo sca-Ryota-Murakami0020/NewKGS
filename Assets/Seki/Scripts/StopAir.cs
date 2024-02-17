@@ -8,11 +8,12 @@ public class StopAir : MonoBehaviour
     public static int count;
     BoxCollider boxCollider;
     [SerializeField] Animator anim;
-    [SerializeField] ParticleSystem beam;
+    [SerializeField] GameObject beam;
+    
     //ここにエフェクトのオブジェクトをおく
     // Start is called before the first frame update
     void Start() {
-        beam.Stop();
+        beam.SetActive(false);
         count = 0;
         boxCollider = this.GetComponent<BoxCollider>();
         anim.enabled = false;
@@ -20,10 +21,11 @@ public class StopAir : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
+        Debug.Log(count);
         if(count == 3) {
             airplane.AIRSPEED = 0.0f;
             //エフェクト再生
-            beam.Play();
+            beam.SetActive(true);
         }
     }
 
