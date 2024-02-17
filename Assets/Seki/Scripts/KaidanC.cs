@@ -101,7 +101,7 @@ public class KaidanC : MonoBehaviour
             playerC.enabled = false;
             player.enabled = false;
             suberu.SetActive(true);
-            suberu.transform.rotation = Quaternion.Euler(0, 90, 0);
+            suberu.transform.rotation = Quaternion.Euler(0, 0, 0);
             this.transform.rotation = Quaternion.Euler(0, 180f, 0);
             UpMove(rall.RALLCOUNT);
         } else {
@@ -110,8 +110,8 @@ public class KaidanC : MonoBehaviour
         }
         if(down) {
             suberu.SetActive(true);
-            suberu.transform.rotation = Quaternion.Euler(0, 90, 0);
-            this.transform.rotation = Quaternion.Euler(0, 180f, 0);
+            suberu.transform.rotation = Quaternion.Euler(0, 0, 0);
+            this.transform.rotation = Quaternion.Euler(0, 0f, 0);
             playerC.enabled = false;
             player.enabled = false;
             DownMove(rall.RALLCOUNT);
