@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using DG.Tweening;
 using PathCreation;
+using UnityEngine.SceneManagement;
 
 //[RequireComponent(typeof(CharacterController))]
 public class PlayerC : MonoBehaviour
@@ -112,7 +113,7 @@ public class PlayerC : MonoBehaviour
     #region//プロパティ
     public bool IsGrand
     {
-        get { return this._isGroundedPrev;}
+        get { return this.isGrounded;}
     }
 
     public GameObject PopObject
@@ -228,6 +229,7 @@ public class PlayerC : MonoBehaviour
         //縛りの影響を反映させる
         currentSpeed = playerSpeed * playerManager.DefSpeedMag;
         currentJumpPower = defaultJumpSpeed * playerManager.DefJumpMag;
+        //Debug.Log(currentJumpPower);
     }
 
     float d;
@@ -235,7 +237,8 @@ public class PlayerC : MonoBehaviour
     void Update()
     {
         //滞空時間計算
-        if (!_isGroundedPrev) CountOnAir();
+        if (!isGrounded) CountOnAir();
+        //Debug.Log("接地判定" + isGrounded);
 
         #region//関担当
         /*
@@ -277,7 +280,7 @@ public class PlayerC : MonoBehaviour
 
             isGrounded = _characterController.isGrounded;
 
-            if(isGrounded && !_isGroundedPrev) {
+            if(isGrounded) {
                 // 着地する瞬間に落下の初速を指定しておく
                 _verticalVelocity = -_initFallSpeed;
             } else if(!isGrounded) {
@@ -461,7 +464,7 @@ public class PlayerC : MonoBehaviour
         #region//落下処理
         if (!onSplite)
         {
-            // 着地する瞬間に落下の初速を指定しておく
+            // 着地する瞬間に落下の初速を指定しておく  
             if (isGrounded && !_isGroundedPrev)
             {
                 _verticalVelocity = -_initFallSpeed;
@@ -519,11 +522,7 @@ public class PlayerC : MonoBehaviour
         {
             currentSpeed = avoidanceSpeed; //* debufC.MoveDebufMag;
             PlayerMove(currentSpeed);
-        }
-
-        //加速床から離れた時の移動 && jumpCount == 1 
-        if (onSplite && _inputMove != Vector2.zero && gutsGaugeC.GPlam == GutsGaugeC.GutsPlam.Doing)
-            
+        }            
         #endregion
 
         _isGroundedPrev = isGrounded; 
@@ -533,6 +532,7 @@ public class PlayerC : MonoBehaviour
     public void JumpPlayer()
     {
         _verticalVelocity = currentJumpPower * debufC.JumpDebufMag;
+        //Debug.Log("ジャンプ下時の値：" + _verticalVelocity);
         //_characterController.height = 0.5f;
     }
 
@@ -577,6 +577,7 @@ public class PlayerC : MonoBehaviour
         //Debug.DrawRay(this.transform.position, moveDelta, Color.red, 1.0f);
         //アニメーション
         anim.SetFloat("InputSpeed", _inputMove.magnitude, 0.1f, Time.deltaTime);
+        //Debug.Log("ジャンプ下時の値：" + _verticalVelocity);
         // CharacterControllerに移動量を指定し、オブジェクトを動かす
         _characterController.Move(moveDelta);
 
@@ -633,10 +634,6 @@ public class PlayerC : MonoBehaviour
     }
     #endregion
 
-    public void CheckLanding()
-    {
-
-    }
     int jumpCount = 0;
     
     int co = 0;
@@ -860,7 +857,10 @@ public class PlayerC : MonoBehaviour
                 }
             }
             if(onTramporin) onTramporin =false;
-            if(currentJumpPower != defaultJumpSpeed * playerManager.DefJumpMag) currentJumpPower = defaultJumpSpeed * playerManager.DefJumpMag;
+            if(currentJumpPower != defaultJumpSpeed * playerManager.DefJumpMag)
+            {
+                currentJumpPower = defaultJumpSpeed * playerManager.DefJumpMag;
+            }
             onAirTime = 0.0f;
             doJump = false;
             jumpCount = 0;
@@ -896,7 +896,7 @@ public class PlayerC : MonoBehaviour
     private void CountOnAir()
     {
         //ジャンプ入力なし（トランポリンも）で地面から落ちたら
-        if(!doJump && !_isGroundedPrev) anim.SetTrigger("OutGround");
+        if(!doJump && !isGrounded) anim.SetTrigger("OutGround");
         //落下時間を計算
         onAirTime += Time.deltaTime;
     }

@@ -74,8 +74,11 @@ public class GutsGaugeC : MonoBehaviour
     {
         if(finisfRecover) finisfRecover = false;
         for(int count = 0; count < gaugeImage.Length; count++)
-            if(!gaugeImage[count].enabled) gaugeImage[count].enabled = true;
-
+        {
+            if (!gaugeImage[count].enabled)
+                gaugeImage[count].enabled = true;
+        }
+            
         nowGuts -= 0.1f;
         var rate = nowGuts/maxGuts;
         gaugeImage[0].fillAmount = rate;
