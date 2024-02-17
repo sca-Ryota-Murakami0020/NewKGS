@@ -41,10 +41,13 @@ public class SousaUIContorller : MonoBehaviour
     bool move = false;
 
     public static int stageClear;
+
+    int random;
     // Start is called before the first frame update
 
     void Start()
     {
+        random = Random.Range(0,3);
         //pos = playerObj.transform.position;
         //playeranim = playerObj.GetComponent<Animator>();
         okText.SetActive(false);
@@ -138,7 +141,7 @@ public class SousaUIContorller : MonoBehaviour
             tipsTime = 0f;
 
         }
-        ImageNext(Pagecount, stageClear);
+        ImageNext(Pagecount, random);
     }
 
     /// <summary>
