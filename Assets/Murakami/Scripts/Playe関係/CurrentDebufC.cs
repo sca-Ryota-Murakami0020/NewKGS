@@ -16,8 +16,10 @@ public class CurrentDebufC : MonoBehaviour
     //時間関係
     private float currentMoveDebufTime = 0.0f;
     private int maxMoveDebufTime = 0;
+    private bool flashingMoveIcon = false;
     private float currentJumpDebufTime = 0.0f;
     private int maxJumpDebufTime = 0;
+    private bool flashingJumpIcon = false;
 
     //倍率関係
     private float moveDebufMag = 1.0f;
@@ -70,21 +72,18 @@ public class CurrentDebufC : MonoBehaviour
             onMoveDebuf = true;
             //プレイヤーが他のデバフを受けていない状態なら
             if (!onJumpDebuf)
-            {
-                ParticleSystem newPar = Instantiate(debufEffect);
-                newPar.transform.position = playerC.PopObject.transform.position;
-                newPar.Play();
-            }
+                playerC.PopDebufEffect();
             moveDebufIcon.enabled = true;
             //差分の計算
             var def = 0.0f;
             if(moveDebufMag > mag) def = moveDebufMag - mag;
             else def = mag - moveDebufMag;
 
-            moveDebufMag -= def;
+            moveDebufMag = def;
             oldMoveDebufMag = moveDebufMag;
 
             maxMoveDebufTime = time;
+            Debug.Log( "時間：" + maxMoveDebufTime);
         }
         //デバフ中且つ取得した倍率の方が高い場合
         else if (onMoveDebuf)
@@ -112,12 +111,32 @@ public class CurrentDebufC : MonoBehaviour
     private void CountMoveDebuf()
     {
         currentMoveDebufTime += 0.01f;
+        Debug.Log("経過時間" + currentMoveDebufTime);
+        if(currentMoveDebufTime == maxMoveDebufTime * 0.8 && !flashingMoveIcon)
+        {
+            StartCoroutine(FlashingMoveDebuf());
+            flashingMoveIcon = true;
+        }
         if(currentMoveDebufTime >= maxMoveDebufTime)
             EndMoveDebuf();
     }
+
+    //アイコンの点滅
+    private IEnumerator FlashingMoveDebuf()
+    {
+        while (currentMoveDebufTime <= maxMoveDebufTime * 0.99)
+        {
+            yield return new WaitForSeconds(0.1f);
+            moveDebufIcon.enabled = false;
+            yield return new WaitForSeconds(0.1f);
+            moveDebufIcon.enabled = true;
+        }
+    }
+
     //移動デバフの終了
     private void EndMoveDebuf()
     {
+        flashingMoveIcon = false;
         onMoveDebuf = false;
         moveDebufIcon.enabled = false;
         moveDebufMag = playerManager.DefSpeedMag;
@@ -125,7 +144,7 @@ public class CurrentDebufC : MonoBehaviour
         oldMoveDebufMag = 0.0f;
         maxMoveDebufTime = 0;
         if (!onJumpDebuf && !onMoveDebuf)
-            Destroy(this.debufEffect);
+            playerC.DeleteDebufEffect();
     }
     #endregion
 
@@ -139,18 +158,14 @@ public class CurrentDebufC : MonoBehaviour
             onMoveDebuf = true;
             //プレイヤーが他のデバフを受けていない状態なら
             if (!onMoveDebuf)
-            {
-                ParticleSystem newPar = Instantiate(debufEffect);
-                newPar.transform.position = playerC.PopObject.transform.position;
-                newPar.Play();
-            }
+                playerC.PopDebufEffect();
             jumpDebufIcon.enabled = true;
             //差分の計算
             var def = 0.0f;
             if (jumpDebufMag > mag) def = jumpDebufMag - mag;
             else def = mag - jumpDebufMag;
 
-            jumpDebufMag -= def;
+            jumpDebufMag = def;
             oldJumpDebufMag = jumpDebufMag;
 
             maxMoveDebufTime = time;
@@ -182,12 +197,31 @@ public class CurrentDebufC : MonoBehaviour
     private void CountJumpDebuf()
     {
         currentJumpDebufTime += 0.01f;
-        if(currentJumpDebufTime >= maxJumpDebufTime)
+        if (currentJumpDebufTime == maxJumpDebufTime * 0.8 && !flashingJumpIcon)
+        {
+            StartCoroutine(FlashingMoveDebuf());
+            flashingJumpIcon = true;
+        }
+        if (currentJumpDebufTime >= maxJumpDebufTime)
             EndJumpDebuf();
     }
+
+    //点滅処理
+    private IEnumerator FlashigJumpIcon()
+    {
+        while (currentJumpDebufTime <= maxJumpDebufTime)
+        {
+            yield return new WaitForSeconds(0.1f);
+            jumpDebufIcon.enabled = false;
+            yield return new WaitForSeconds(0.1f);
+            jumpDebufIcon.enabled = true;
+        }
+    }
+
     //ジャンプデバフの終了
     private void EndJumpDebuf()
     {
+        flashingJumpIcon = false;
         onJumpDebuf = false;
         jumpDebufIcon.enabled = false;
         jumpDebufMag = playerManager.DefJumpMag;
@@ -195,7 +229,7 @@ public class CurrentDebufC : MonoBehaviour
         oldJumpDebufMag = 0.0f;
         maxJumpDebufTime = 0;
         if(!onJumpDebuf && !onMoveDebuf)
-            Destroy(this.debufEffect);
+            playerC.DeleteDebufEffect();
     }
     #endregion
 }

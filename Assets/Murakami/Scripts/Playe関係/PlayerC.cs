@@ -41,6 +41,8 @@ public class PlayerC : MonoBehaviour
     private Animator anim = null;
     [Header("エフェクト呼び出す場所のオブジェクト"),SerializeField]
     private GameObject popEffectObject;
+    [Header("デバフエフェクトの呼び出し位置"),SerializeField]
+    private GameObject effectObject;
     [SerializeField]
     private GameObject shotRayPosition;
     [SerializeField]
@@ -97,14 +99,6 @@ public class PlayerC : MonoBehaviour
     #endregion
 
     #region//enum型
-    //着地中or回避後の後隙中に動けない様にする
-    public enum MovePlayerPlam
-    {
-        Can,
-        Stopping
-    }
-    private MovePlayerPlam canMovePlayer;
-
     //ワープ用の動き
     public enum WarpPlam
     {
@@ -116,14 +110,6 @@ public class PlayerC : MonoBehaviour
     #endregion
 
     #region//プロパティ
-    /*
-    public bool IsRain
-    {
-        get { return this.isRain;}
-        set { this.isRain = value;}
-    }
-    */
-
     public bool IsGrand
     {
         get { return this._isGroundedPrev;}
@@ -236,6 +222,7 @@ public class PlayerC : MonoBehaviour
     {
         DamagePanel.SetActive(false);       
         planeCol.enabled = true;
+        effectObject.SetActive(false);
 
         playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
         //縛りの影響を反映させる
@@ -251,6 +238,7 @@ public class PlayerC : MonoBehaviour
         if (!_isGroundedPrev) CountOnAir();
 
         #region//関担当
+        /*
         if (bigJump) {
             anim.SetTrigger("TrnJump");
             currentJumpPower = addJumpSpeed;
@@ -267,10 +255,12 @@ public class PlayerC : MonoBehaviour
         } else {
             _fallSpeed = 30f;
         }
+        */
         if (onTramporin) {
             bigJump = true;
 
             if(bigJump) {
+                Debug.Log("tonnda");
                 anim.SetTrigger("TrnJump");
                 currentJumpPower = addJumpSpeed;
                 _fallSpeed = 50f;
@@ -392,8 +382,7 @@ public class PlayerC : MonoBehaviour
 
     //ジャンプアクション
     public void OnJump(InputAction.CallbackContext context)
-    {
-        
+    {       
         if(silde)
         {
             anim.SetTrigger("TrnJump");
@@ -404,7 +393,6 @@ public class PlayerC : MonoBehaviour
             
             silde = false;
         }
-        //else currentJumpPower = defaultJumpSpeed;
 
         //地面orトランポリンに乗っている時または回避中以外だけ処理する!context.performed || 
         if (!_characterController.isGrounded)
@@ -504,22 +492,21 @@ public class PlayerC : MonoBehaviour
 
         #region//行動処理
         //通常の移動
-        if (gutsGaugeC.GPlam != GutsGaugeC.GutsPlam.Doing
-            && canMovePlayer == MovePlayerPlam.Can)
+        if (gutsGaugeC.GPlam != GutsGaugeC.GutsPlam.Doing)
         {
             //加速床に乗っている時
             currentSpeed = playerSpeed * debufC.MoveDebufMag;
             PlayerMove(currentSpeed);
         }
 
-        //ダッシュ中
-        else if (gutsGaugeC.GPlam == GutsGaugeC.GutsPlam.Doing
-            && canMovePlayer == MovePlayerPlam.Can)
+        //ダッシュ中 && canMovePlayer == MovePlayerPlam.Can
+        else if (gutsGaugeC.GPlam == GutsGaugeC.GutsPlam.Doing)
         {
             //スティックの入力があるときのみ処理を行う
             if (_inputMove != Vector2.zero)
             {
-                currentJumpPower = dashSpeed * debufC.MoveDebufMag;
+                if(!onSplite) currentSpeed = (dashSpeed * playerManager.DefSpeedMag) * spliteSpeed;
+                else currentSpeed = dashSpeed * debufC.MoveDebufMag;
                 PlayerMove(currentSpeed);
             }
             //ボタン入力ON、スティック入力NO＝＞スタミナ減少を解除してダッシュを終了する
@@ -536,7 +523,7 @@ public class PlayerC : MonoBehaviour
 
         //加速床から離れた時の移動 && jumpCount == 1 
         if (onSplite && _inputMove != Vector2.zero && gutsGaugeC.GPlam == GutsGaugeC.GutsPlam.Doing)
-            currentSpeed = (dashSpeed * playerManager.DefSpeedMag) * spliteSpeed;
+            
         #endregion
 
         _isGroundedPrev = isGrounded; 
@@ -663,12 +650,6 @@ public class PlayerC : MonoBehaviour
             myAnim.enabled = false;
             slopeObj.SetActive(true);
             this.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
-            /*
-            silde = true;
-            for(int u = 0; u < kaidan.Length; u++) {
-                kaidan[u].enabled = false;
-            }
-            */
         }
 
         //トランポリン
@@ -679,7 +660,22 @@ public class PlayerC : MonoBehaviour
             onTramporin = true;
         }
 
-        if(col.tag == "hunn") debufC.ActiveMoveDebuf(60, 0.1f);
+        //トラップ
+        if(col.tag == "Trap" && avoidanceC.AvoiP != AvoidanceC.AvoiPlam.Doing)
+        {
+            TrapC trapC = col.gameObject.GetComponent<TrapC>();
+            switch (trapC.DebufKinds)
+            {
+                //移動用デバフ
+                case TrapC.DebufKind.DefMove:
+                    debufC.ActiveMoveDebuf(trapC.DebufTime, trapC.DebufMag);
+                    break;
+                //ジャンプ用デバフ
+                case TrapC.DebufKind.DefJump:
+                    debufC.ActiveJumpDebuf(trapC.DebufTime, trapC.DebufMag);
+                    break;
+            }
+        }
 
         //落とし穴
         if (col.tag == "holl")
@@ -735,12 +731,12 @@ public class PlayerC : MonoBehaviour
             spliteSpeed = spliteC.AddSpeedMag;
             spliteJumpSpeed = spliteC.AddJumpMag;
             spliteGravity = spliteC.SubGravity;
+            Debug.Log("加速床に触れた");
         }
 
         //ワープポータル(出たところは範囲内なので出るまではワープできない様にする)
         if(col.tag == "warp" && playerWarpP == WarpPlam.Can)
         {
-            Debug.Log("ワープ地点到着");
             WarpC warpC = col.gameObject.GetComponent<WarpC>();
             //Debug.Log("関数" + warpC.RollsignPortal.gameObject.name);
             Vector3 portalPos = warpC.RollsignPortal.transform.position;
@@ -760,9 +756,6 @@ public class PlayerC : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         cc.enabled = true;
         _playerInput.enabled = true;
-        Debug.Log($"現在地：{this.transform.position}");
-        //Debug.Log($"予定地：{pos}");
-        Debug.Log("ワープ完了");
         playerWarpP = WarpPlam.StayPortal;
     }
 
@@ -805,6 +798,7 @@ public class PlayerC : MonoBehaviour
         //加速床
         if(col.tag == "SpritPanel")
             staySplite = false;
+
         if(col.tag == "warp" && playerWarpP == WarpPlam.StayPortal)
             StartCoroutine(ChangeWarpPlam());
     }
@@ -865,7 +859,8 @@ public class PlayerC : MonoBehaviour
                     }
                 }
             }
-
+            if(onTramporin) onTramporin =false;
+            if(currentJumpPower != defaultJumpSpeed * playerManager.DefJumpMag) currentJumpPower = defaultJumpSpeed * playerManager.DefJumpMag;
             onAirTime = 0.0f;
             doJump = false;
             jumpCount = 0;
@@ -878,24 +873,15 @@ public class PlayerC : MonoBehaviour
             allGoal = true;
             gameManager.NameChange();
         }
-
-        //トラップの関数を取得する
-        if(hit.gameObject.tag == "Trap" && avoidanceC.AvoiP != AvoidanceC.AvoiPlam.Doing)
-        {
-            TrapC trapC = hit.gameObject.GetComponent<TrapC>();
-            switch (trapC.DebufKinds)
-            {
-                //移動用デバフ
-                case TrapC.DebufKind.DefMove:
-                    debufC.ActiveMoveDebuf(trapC.DebufTime,trapC.DebufMag);
-                    break;
-                //ジャンプ用デバフ
-                case TrapC.DebufKind.DefJump:
-                    debufC.ActiveJumpDebuf(trapC.DebufTime, trapC.DebufMag);
-                    break;
-            }
-        }
     }
+
+    //エフェクトの呼び出し
+    public void PopDebufEffect()
+        =>effectObject.SetActive(true);
+
+    //エフェクトの削除
+    public void DeleteDebufEffect()
+        =>effectObject.SetActive(false);
 
     private IEnumerator ResetMag()
     {
