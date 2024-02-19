@@ -54,11 +54,11 @@ public class CrazyCar : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision) {
-        if(collision.gameObject.tag == "syata") {
+    private void OnTriggerEnter(Collider other) {
+        if(other.gameObject.tag == "syata") {
             agent.speed = 0f;
             stop = true;
-            collision.gameObject.SetActive(false);
+            other.gameObject.SetActive(false);
             this.gameObject.SetActive(false);
             //ミッションの達成ポイントを加算する
             missionManager.MISSIONVALUE[missionManager.RADOMMISSIONCOUNT]++;

@@ -87,9 +87,9 @@ public class AirController : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-    private void OnCollisionEnter(Collision collision) {
+    private void OnTriggerEnter(Collider other) {
         
-        if(collision.gameObject.tag == "air") {
+        if(other.gameObject.tag == "air") {
             hit = true;
             gameManager.GAMEOVER = true;
             gameManager.CurrentRemain = -1;

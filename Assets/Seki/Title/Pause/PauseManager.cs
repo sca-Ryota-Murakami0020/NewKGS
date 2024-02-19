@@ -106,7 +106,7 @@ public class PauseManager : MonoBehaviour
 
             if(myPos.localPosition == Point[0].localPosition) {
                 LineMove(0);
-                if (Gamepad.current.bButton.isPressed) {
+                if (Gamepad.current.bButton.wasPressedThisFrame && !check) {
                     isFadeFlag = true;
                     check = true;
                     playStart = true;
