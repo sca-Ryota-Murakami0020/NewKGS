@@ -36,6 +36,8 @@ public class ExMissionManager : MonoBehaviour
     [SerializeField] GameObject[] drive;
     [SerializeField] GameObject[] textMission;
     [SerializeField] Text bigMissionText;
+    [SerializeField] AudioSource sound;
+    [SerializeField] AudioClip music;
     // Start is called before the first frame update
     void Start()
     {
@@ -63,6 +65,7 @@ public class ExMissionManager : MonoBehaviour
 
         if(exMission && !active) {
             missionImage.SetActive(true);
+            sound.PlayOneShot(music);
             StartCoroutine(WaitActive());
             active = true;
         }

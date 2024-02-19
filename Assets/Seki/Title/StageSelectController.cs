@@ -50,6 +50,8 @@ public class StageSelectController : MonoBehaviour
             return this.modeFlag;
         }
     }
+
+    [SerializeField] GameObject[] music;
     // Start is called before the first frame update
     void Start()
     {
@@ -103,6 +105,7 @@ public class StageSelectController : MonoBehaviour
     void StageSelect() {
         if(myPos.localPosition == Pos[0].localPosition) {
             title.SelectSetumei(0);
+            SoundMusic(0);
             if(Gamepad.current.bButton.wasPressedThisFrame) {
                 mode = MODE.STORY;
                 parent.SetBool("fade",true);
@@ -112,6 +115,7 @@ public class StageSelectController : MonoBehaviour
         }
         if(myPos.localPosition == Pos[1].localPosition) {
             title.SelectSetumei(1);
+            SoundMusic(1);
             if(Gamepad.current.bButton.wasPressedThisFrame) {
                 //normal = true;
                 mode = MODE.CHALLENGE;
@@ -127,5 +131,15 @@ public class StageSelectController : MonoBehaviour
         //si.enabled = true;
         //parent.enabled = false;
         //myScripts.enabled = false;
+    }
+
+    void SoundMusic(int c) {
+        for(int i = 0; i < music.Length; i++) {
+            if(i == c) {
+                music[c].SetActive(true);
+            } else {
+                music[i].SetActive(false);
+            }
+        }
     }
 }

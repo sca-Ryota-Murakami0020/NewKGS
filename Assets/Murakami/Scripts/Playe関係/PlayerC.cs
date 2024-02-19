@@ -638,6 +638,9 @@ public class PlayerC : MonoBehaviour
     
     int co = 0;
 
+    [SerializeField] AudioSource sound;
+    [SerializeField] AudioClip DamageSound;
+
     //ÚGˆ—
     private void OnTriggerEnter(Collider col)
     {       
@@ -700,6 +703,7 @@ public class PlayerC : MonoBehaviour
 
         if(col.tag == "Enemy") {
             co = 1;
+            sound.PlayOneShot(DamageSound);
             StartCoroutine(WaitFall());
             _playerInput.enabled = false;
             StartCoroutine(WaitChara());
