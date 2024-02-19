@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   airplane: {fileID: 1560436367}
-  anim: {fileID: 552021385}
+  anim: {fileID: 705883684}
   beam: {fileID: 1423485489}
 --- !u!65 &895055
 BoxCollider:
@@ -12705,7 +12705,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -13488,7 +13488,7 @@ Transform:
   m_GameObject: {fileID: 313111194}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 42.41, y: -27.6, z: -34.56}
+  m_LocalPosition: {x: 44.62, y: -27.6, z: -36.7}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -13508,7 +13508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   airplane: {fileID: 1560436367}
-  anim: {fileID: 705883684}
+  anim: {fileID: 552021385}
   beam: {fileID: 1196070440}
 --- !u!65 &313111197
 BoxCollider:
@@ -23030,7 +23030,7 @@ GameObject:
   - component: {fileID: 553619932}
   m_Layer: 0
   m_Name: TVObj
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -78974,7 +78974,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -98862,6 +98862,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2053401351}
   - component: {fileID: 2053401352}
+  - component: {fileID: 2053401353}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Enemy
@@ -98905,6 +98906,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5.54, y: 5.31, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &2053401353
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2053401350}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &2053879824
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -98968,6 +98996,10 @@ PrefabInstance:
     - target: {fileID: 50832179427995939, guid: 6880438938f06c946955d2b004d848fe, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1639200245650961921, guid: 6880438938f06c946955d2b004d848fe, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3958609379848094512, guid: 6880438938f06c946955d2b004d848fe, type: 3}
       propertyPath: m_Name
@@ -107773,7 +107805,7 @@ Transform:
   m_GameObject: {fileID: 529306907379934969}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.4173912, z: 0, w: 0.90872693}
-  m_LocalPosition: {x: 8.669552, y: -34.60707, z: -23.466677}
+  m_LocalPosition: {x: 8.669552, y: -35.41, z: -23.466677}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
