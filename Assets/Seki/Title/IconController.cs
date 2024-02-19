@@ -48,6 +48,8 @@ public class IconController : MonoBehaviour
     }
     [SerializeField] Animator printObj;
     [SerializeField] StageSelectController stage;
+
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -71,6 +73,7 @@ public class IconController : MonoBehaviour
 
         if(!rank) { 
         if(my.localPosition == Title[0].localPosition) {
+            
             story = false;
             UnderUI(0);
             if(Gamepad.current.bButton.wasReleasedThisFrame) {
@@ -81,6 +84,7 @@ public class IconController : MonoBehaviour
         }
 
         if(my.localPosition == Title[1].localPosition) {
+            
             UnderUI(1);
             story = true;
             if(Gamepad.current.bButton.wasReleasedThisFrame) {
@@ -113,11 +117,13 @@ public class IconController : MonoBehaviour
     /// </summary>
     void IconPos() {
         if(Gamepad.current.leftStick.right.wasReleasedThisFrame) {
+     
             my.localPosition = Title[0].localPosition;
             
             animator.SetBool("Tyoku",false);
         }
         if(Gamepad.current.leftStick.left.wasReleasedThisFrame) {
+
             my.localPosition = Title[1].localPosition;
 
             animator.SetBool("Tyoku", true);
@@ -128,8 +134,10 @@ public class IconController : MonoBehaviour
         for(int i = 0; i < underUi.Length; i++) {
             if(i == c) {
                 underUi[c].SetActive(true);
+             
             } else {
                 underUi[i].SetActive(false);
+             
             }
         }
     }

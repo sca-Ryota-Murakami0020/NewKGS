@@ -280,6 +280,8 @@ public class RunOnlyPlayerC : MonoBehaviour
         
     }
 
+    [SerializeField] AudioSource sound;
+    [SerializeField] AudioClip damageSound;
 
     //ê⁄êGîªíË
     private void OnCollisionEnter(Collision collision)
@@ -299,6 +301,7 @@ public class RunOnlyPlayerC : MonoBehaviour
         }
 
         if(collision.gameObject.tag == "Enemy") {
+            sound.PlayOneShot(damageSound);
             fall = true;
         }
     }

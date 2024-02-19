@@ -95,7 +95,8 @@ public class MissionManager : MonoBehaviour
     PlayerC playerC;
 
     string stageName;
-
+    [SerializeField] AudioSource sound;
+    [SerializeField] AudioClip music;
     // Start is called before the first frame update
     void Start()
     {
@@ -259,6 +260,7 @@ public class MissionManager : MonoBehaviour
     void MissionActive(int count) {
             cinema.SetActive(false);
             player.enabled = false;
+            sound.PlayOneShot(music);
             missionUI.SetActive(true);
             mission.enabled = true;
         for(int u = 0; u < missionImage.Length; u++) {

@@ -67,6 +67,7 @@ public class DemoIcon : MonoBehaviour
     [SerializeField] TitleManager titleManager;
 
     [SerializeField] Image[] SibariIcon;
+    [SerializeField] GameObject[] sound;
  
     // Start is called before the first frame update
     void Start()
@@ -113,31 +114,37 @@ public class DemoIcon : MonoBehaviour
             LeftRightStick();
       
             if(myPos.localPosition == Pos[0].localPosition) {
+                soundMusic(0);
                 PosButton(0);
                 Pushlevel(0);
                 ChangeIcon(P_level[0],0);
             }
-            else if(myPos.localPosition == Pos[1].localPosition) { 
+            else if(myPos.localPosition == Pos[1].localPosition) {
+                soundMusic(1);
                 PosButton(1);
                 Pushlevel(1);
                 ChangeIcon(P_level[1], 1);
             }
             else if(myPos.localPosition == Pos[2].localPosition) {
+                soundMusic(2);
                 PosButton(2);
                 Pushlevel(2);
                 ChangeIcon(P_level[2], 2);
             }
             else if(myPos.localPosition == Pos[3].localPosition) {
+                soundMusic(3);
                 PosButton(3);
                 Pushlevel(3);
                 ChangeIcon(P_level[3], 3);
             }
             else if(myPos.localPosition == Pos[4].localPosition) {
+                soundMusic(4);
                 PosButton(4);
                 Pushlevel(4);
                 ChangeIcon(P_level[4], 4);
             }
             else if(myPos.localPosition == Pos[5].localPosition) {
+                soundMusic(5);
                 PosButton(5);
                 Pushlevel(5);
                 ChangeIcon(P_level[5], 5);
@@ -163,6 +170,16 @@ public class DemoIcon : MonoBehaviour
             parent.SetBool("sibariFlag", true);
             Start();
             this.enabled = false;
+        }
+    }
+
+    void soundMusic(int c) {
+        for(int i = 0; i < sound.Length; i++) {
+            if(i == c) {
+                sound[c].SetActive(true);
+            } else {
+                sound[i].SetActive(false);
+            }
         }
     }
 
