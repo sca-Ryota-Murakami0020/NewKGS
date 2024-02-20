@@ -72,7 +72,7 @@ public class RunOnlyPlayerC : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+      
         playerSpeed = thirdGM.PlayerSpeed;
         jumpPow = thirdGM.PlayerJumpPow;
     }
@@ -111,12 +111,13 @@ public class RunOnlyPlayerC : MonoBehaviour
             
         if(!goal && !fall && !pause.PAUSE) {
            MoveObjects();
-            if(Input.GetKeyDown("joystick button 0")) {
+            if(Gamepad.current.aButton.wasPressedThisFrame) {
                 y = true;
-            
-                //anim.SetTrigger("DoJump");
+                Debug.Log("åƒÇ—èoÇµ");
+                anim.SetTrigger("DoJump");
                 onGround = false;
             }
+
             if(y && myPos.y < 5.0f) {
                 this.rb.AddForce(transform.up * jumpForce);
             }
