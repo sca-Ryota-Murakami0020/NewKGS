@@ -25,13 +25,13 @@ public class rock : MonoBehaviour
     void Update()
     {
         if(!playerC.FALLING && !pause.PAUSE) { 
-        //ä‚ÇÃê∂ê¨
-        if(shotDistance < createCount)
-        {
-            Roll();
-            createCount = 0f;
-        }
-        createCount += Time.deltaTime;
+            //ä‚ÇÃê∂ê¨
+            if(shotDistance < createCount)
+            {
+                Roll();
+                createCount = 0f;
+            }
+            createCount += Time.deltaTime;
         }
     }
 
@@ -41,7 +41,6 @@ public class rock : MonoBehaviour
         //ä‚ÇÃê∂ê¨
         float spawnX = Random.Range(-1.6f,1.6f);
         Vector3 spawn = new Vector3(spawnX,player.transform.position.y + height ,player.transform.position.z + distance);
-
         GameObject rockObject = Instantiate(obstacleObject,spawn,Quaternion.identity);
         Rigidbody rockRigidbody = rockObject.GetComponent<Rigidbody>();
         rockRigidbody.velocity = new Vector3(0f,0f,-shotPower);

@@ -14290,6 +14290,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: oldpl
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bdf536bfa65e6804195fb041c4484c03, type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -28964,7 +28968,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstacleObject: {fileID: 6314125292440684782, guid: c95c2b7164151de4b9bcb776e9ab792c, type: 3}
-  player: {fileID: 1697239742905541144}
+  player: {fileID: 6716266315749539230}
   shotDistance: 3
   shotPower: 20
   playerC: {fileID: 6716266315749539233}
@@ -56719,7 +56723,9 @@ MonoBehaviour:
   plane: {fileID: 0}
   pause: {fileID: 0}
   gameManager: {fileID: 0}
+  jumpForce: 10000
   warpObj: {fileID: 0}
+  speed: 0
   sound: {fileID: 0}
   damageSound: {fileID: 0}
 --- !u!65 &1697239742905541146
@@ -60333,7 +60339,9 @@ MonoBehaviour:
   plane: {fileID: 818361620}
   pause: {fileID: 277075763}
   gameManager: {fileID: 2079648246}
+  jumpForce: 5000
   warpObj: {fileID: 1210987955}
+  speed: 250
   sound: {fileID: 6716266315749539235}
   damageSound: {fileID: 8300000, guid: 19e38c88ceea57b4c8d353e8f74c11cb, type: 3}
 --- !u!95 &6716266315749539234

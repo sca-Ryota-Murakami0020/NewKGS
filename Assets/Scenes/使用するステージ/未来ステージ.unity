@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -38140,7 +38140,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3081517057053132891, guid: bc8ec55a25f47284b8152f9b055d9c99, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -38901,6 +38901,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 2e76ef3fa9ccf3d419053bee8e3dc956, type: 2}
+    - target: {fileID: 3148975038464636545, guid: 454cf0e4a426f834c9149aaed33a3f6a, type: 3}
+      propertyPath: rollsignPortal
+      value: 
+      objectReference: {fileID: 1418349166}
     - target: {fileID: 5473839512431687988, guid: 454cf0e4a426f834c9149aaed33a3f6a, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -64763,6 +64767,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 2e76ef3fa9ccf3d419053bee8e3dc956, type: 2}
+    - target: {fileID: 3148975038464636545, guid: 454cf0e4a426f834c9149aaed33a3f6a, type: 3}
+      propertyPath: rollsignPortal
+      value: 
+      objectReference: {fileID: 910686726}
     - target: {fileID: 5473839512431687988, guid: 454cf0e4a426f834c9149aaed33a3f6a, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

@@ -48,6 +48,7 @@ public class RunOnlyPlayerC : MonoBehaviour
     }
 
     private bool hitGround = false;
+    private bool isFall = false;
 
     private Vector2 inputMoveVelocity = Vector2.zero;
     #endregion
@@ -77,7 +78,7 @@ public class RunOnlyPlayerC : MonoBehaviour
         jumpPow = thirdGM.PlayerJumpPow;
     }
 
-    float jumpForce = 10.0f;
+    [SerializeField]float jumpForce = 10000.0f;
 
     bool fall = false;
     public bool FALLING {
@@ -106,7 +107,6 @@ public class RunOnlyPlayerC : MonoBehaviour
         if(!onGround)
         {
             DrowFootRay();
-            
         } 
             
         if(!goal && !fall && !pause.PAUSE) {
@@ -118,17 +118,18 @@ public class RunOnlyPlayerC : MonoBehaviour
                 onGround = false;
             }
 
-            if(y && myPos.y < 5.0f) {
-                this.rb.AddForce(transform.up * jumpForce);
+            if (y && myPos.y < 5.0f && !isFall) this.rb.AddForce(transform.up * jumpForce * Time.deltaTime);
+
+            if (y && myPos.y > 5.0f)
+            {
+                isFall = true;
+                this.rb.AddForce(transform.up * -jumpForce * 2 * Time.deltaTime) ;
             }
 
-            if(y && myPos.y > 5.0f)
-                this.rb.AddForce(transform.up * -jumpForce*2);
-            //y= false;
-            // }
-            if(onGround) {
-             
+
+            if (onGround) {
                 y = false;
+                isFall = false;
             }
         } else if(goal && !fall) {
             Vector3 current = this.transform.position;
@@ -166,6 +167,7 @@ public class RunOnlyPlayerC : MonoBehaviour
         if(avoC.AvoiP != AvoidanceC.AvoiPlam.Doing
             && jumpCount == 0)
         {
+            Debug.Log("ジャンプ");
             jumpCount += 1;
             anim.SetTrigger("DoJump");
         }
@@ -204,7 +206,7 @@ public class RunOnlyPlayerC : MonoBehaviour
   
     Vector3 myPos;
     
-    
+    [SerializeField] private float speed;
     bool jump = false;
     //プレイヤーの前進処理
     private void MoveObjects()
@@ -226,15 +228,17 @@ public class RunOnlyPlayerC : MonoBehaviour
         //ボタン入力処理
         if(onGround) { 
         inputMoveVelocity.x = Input.GetAxis("Horizontal");
-        if(inputMoveVelocity.x > 0 && myPos.x <= 6.0f) {
-            myPos.x += 0.08f;
+        if(inputMoveVelocity.x > 0.1 && myPos.x <= 6.0f) {
+            myPos.x += 0.08f * Time.deltaTime * speed;
+               // Debug.Log("入力y" + inputMoveVelocity.x);
             //this.transform.position += new Vector3(inputMoveVelocity.x, inputJumpVelocity, playerSpeed) * playerSpeed;
         }
-        else if(inputMoveVelocity.x < 0 && myPos.x >= -6.0f) {
-            myPos.x -= 0.08f;
+        else if(inputMoveVelocity.x < -0.1 && myPos.x >= -6.0f) {
+            myPos.x -= 0.08f * Time.deltaTime * speed;
+               // Debug.Log("入力y" + inputMoveVelocity.x);
+            }
         }
-        }
-        myPos.z += 0.1f;
+        myPos.z += 0.1f * Time.deltaTime * speed;
 
        // if(Input.GetKeyDown("joystick button 0")) {
             //myRigidbody.useGravity = false;
@@ -292,7 +296,7 @@ public class RunOnlyPlayerC : MonoBehaviour
         {
             onGround = true;
             hitGround = true;
-            
+            Debug.Log("着地" + onGround);
             //myRigidbody.useGravity = true;
         }           
         //何かしらのギミックに引っかかった時

@@ -52,7 +52,6 @@ public class DinosaurController : MonoBehaviour
             Instantiate(this, startPoint.position, Quaternion.Euler(0f, 90f, 0f));
             once = false;
             count++;
-            Debug.Log("count"+count);
         }
 
 
