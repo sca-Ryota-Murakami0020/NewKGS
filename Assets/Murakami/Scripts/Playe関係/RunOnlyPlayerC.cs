@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-//using static UnityEditor.PlayerSettings;
 
 public class RunOnlyPlayerC : MonoBehaviour
 {
@@ -33,7 +32,6 @@ public class RunOnlyPlayerC : MonoBehaviour
     [SerializeField] private GameObject shotRayPosition;
 
     private InputAction buttonAction;
-    private float playerSpeed = 0.0f;
     private float jumpPow = 0.0f;
     private float inputJumpVelocity = 0.0f;
     private int jumpCount = 0;
@@ -73,8 +71,6 @@ public class RunOnlyPlayerC : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-      
-        playerSpeed = thirdGM.PlayerSpeed;
         jumpPow = thirdGM.PlayerJumpPow;
     }
 
