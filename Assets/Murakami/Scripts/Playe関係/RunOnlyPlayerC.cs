@@ -28,8 +28,6 @@ public class RunOnlyPlayerC : MonoBehaviour
     [SerializeField] private float _gravity;
     [SerializeField] private float inputFallSpeed;
     [SerializeField] private float fallSpeed;
-    //Ray‚ð”ò‚Î‚·ƒ|ƒWƒVƒ‡ƒ“
-    [SerializeField] private GameObject shotRayPosition;
 
     private InputAction buttonAction;
     private float jumpPow = 0.0f;
@@ -99,12 +97,6 @@ public class RunOnlyPlayerC : MonoBehaviour
             StageSelectController.mode = StageSelectController.MODE.CHALLENGE;
         }
         */
-
-        if(!onGround)
-        {
-            DrowFootRay();
-        } 
-            
         if(!goal && !fall && !pause.PAUSE) {
            MoveObjects();
             if(Gamepad.current.aButton.wasPressedThisFrame) {
@@ -274,8 +266,6 @@ public class RunOnlyPlayerC : MonoBehaviour
         if(!onGround)
         {
             inputJumpVelocity -= _gravity * Time.deltaTime;
-
-            //this.transform.position += new Vector3(inputMoveVelocity.x, inputJumpVelocity , playerSpeed) * playerSpeed;
             if(inputJumpVelocity <= 0.0f) inputJumpVelocity = 0.0f;
         } 
         
@@ -312,7 +302,6 @@ public class RunOnlyPlayerC : MonoBehaviour
     {
         if(collision.gameObject.tag == "Ground")
         {
-
             onGround = false;
             hitGround = false;
         }
@@ -335,27 +324,6 @@ public class RunOnlyPlayerC : MonoBehaviour
         if(other.gameObject.tag == "holl") {
             fall = true;
             plane.enabled = false;
-        }
-    }
-
-    //‘«Œ³‚©‚çRay‚ð”ò‚Î‚·
-    private void DrowFootRay()
-    {
-        Vector3 rayPosition = shotRayPosition.transform.position;
-        RaycastHit hit;
-        //‰ºŒü‚«‚ÌRay‚ð¶¬‚·‚é
-        Ray ray = new Ray(rayPosition,-this.gameObject.transform.up);
-        Debug.DrawRay(shotRayPosition.transform.position, -shotRayPosition.transform.up);
-        //float distance = Vector3.Distance(hit, rayPosition);
-        if(!Physics.Raycast(ray, out hit, 1.2f))
-        {
-            hitGround = false;
-          
-            inputJumpVelocity = 0.0f;
-        }
-        if(Physics.Raycast(ray, out hit, 0.06f))
-        {
-            Debug.Log("uuuuuuuu");
         }
     }
 }

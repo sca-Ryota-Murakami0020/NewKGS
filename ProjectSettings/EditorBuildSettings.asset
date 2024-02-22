@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MojiHyouji.unity
     guid: 724ed452eb9e2ae489e2cfa5dc49b499
   - enabled: 1
-    path: Assets/Scenes/Stage1.unity
+    path: Assets/Scenes/Murakami.unity
     guid: 7f50793d183c1c74eab5638cd03a7355
   - enabled: 1
     path: "Assets/Scenes/\u4F7F\u7528\u3059\u308B\u30B9\u30C6\u30FC\u30B8/\u672A\u6765\u30B9\u30C6\u30FC\u30B8.unity"
