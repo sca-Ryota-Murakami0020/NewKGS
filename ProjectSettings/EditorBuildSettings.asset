@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MojiHyouji.unity
     guid: 724ed452eb9e2ae489e2cfa5dc49b499
   - enabled: 1
-    path: Assets/Scenes/Murakami.unity
+    path: Assets/Scenes/Stage1.unity
     guid: 7f50793d183c1c74eab5638cd03a7355
   - enabled: 1
     path: "Assets/Scenes/\u4F7F\u7528\u3059\u308B\u30B9\u30C6\u30FC\u30B8/\u672A\u6765\u30B9\u30C6\u30FC\u30B8.unity"
@@ -26,8 +26,5 @@ EditorBuildSettings:
   - enabled: 1
     path: "Assets/Scenes/\u4F7F\u7528\u3059\u308B\u30B9\u30C6\u30FC\u30B8/\u904E\u53BB\u30B9\u30C6\u30FC\u30B8.unity"
     guid: b62755c490782fe4a9eb428dd42cafb9
-  - enabled: 0
-    path: Assets/Scenes/PlayScene.unity
-    guid: 1179e9b81b4632445a0e8ec6c2c74918
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: defa539550de3154797fcbbf0fb518e7, type: 2}
