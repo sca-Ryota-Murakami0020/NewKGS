@@ -129,9 +129,6 @@ public class RunOnlyPlayerC : MonoBehaviour
        //}
     }
 
-    void GoalMove() {
-
-    }
 
     //ˆÚ“®“ü—Íˆ—
     /*

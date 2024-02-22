@@ -16,6 +16,7 @@ public class ThirdStageGM : MonoBehaviour
     //private TMP_Text remainText;
     //実行中の残機
     private int currentRemain = 0;
+    
     public int CURRENTREMAIN {
         set {
             this.currentRemain = value;
@@ -24,6 +25,7 @@ public class ThirdStageGM : MonoBehaviour
             return this.currentRemain;
         }
     }
+    
     //残機用のアニメーション
     [SerializeField]
     private Animator remainAni;
@@ -85,6 +87,7 @@ public class ThirdStageGM : MonoBehaviour
     }
     [SerializeField] GameObject overPlayer;
     [SerializeField] RezalutC rezalut;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -147,11 +150,11 @@ public class ThirdStageGM : MonoBehaviour
         }
 
     }
+
     IEnumerator WaitInoti() {
         if(currentRemain != 0) {
             missText.SetActive(true);
-            yield return new WaitForSeconds(2.0f);
-           
+            yield return new WaitForSeconds(2.0f);          
 
             plane.enabled = true;
 
@@ -181,15 +184,16 @@ public class ThirdStageGM : MonoBehaviour
     IEnumerator WaitU() {
         yield return new WaitForSeconds(1.0f);
         if(!remain) {
-            playerManager.ManagerRemain--;
+            //playerManager.ManagerRemain--;
             currentRemain--;
+            Debug.Log("引き算下");
+            zankiIconText.text = "×" + currentRemain;
             remain = true;
         }
         
         runPlayerC.FALLING = false;
         
         if(!GameOver) {
-
             List<IEnumerator> ie = new List<IEnumerator>();
             ie.Add(WaitFadeIn());
             foreach(IEnumerator item in ie) {
@@ -283,24 +287,5 @@ public class ThirdStageGM : MonoBehaviour
             return;
         }
     }
-    /*
-   //ステージ予備
-   public void StageClear()
-   {
-       SousaUIContorller.stageClear++;
-       if(StageSelectController.mode == StageSelectController.MODE.STORY) {
-           TitleManager.sceneName = "MojiHyouji";
-           //SceneManager.LoadScene("LoadScene");
-       }
-       else if(StageSelectController.mode == StageSelectController.MODE.CHALLENGE) {
-           TitleManager.sceneName = "Masaki";
-       }
 
-
-   }
-
-   public void NextStage() {
-       SceneManager.LoadScene("LoadScene");
-   }
-   */
 }
