@@ -704,7 +704,8 @@ public class PlayerC : MonoBehaviour
         if(col.tag == "Enemy") {
             co = 1;
             sound.PlayOneShot(DamageSound);
-            StartCoroutine(WaitFall());
+            falling = true;
+            //StartCoroutine(WaitFall());
             _playerInput.enabled = false;
             StartCoroutine(WaitChara());
         }
