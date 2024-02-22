@@ -197,6 +197,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if(player.KEYCOUNT >= 3) {
             keyActiveObj.SetActive(false);
         }
@@ -314,8 +315,9 @@ public class GameManager : MonoBehaviour
     IEnumerator WaitU() {
         yield return new WaitForSeconds(1.0f);
         if (!remain) {
-            playerManager.ManagerRemain--;
+            //playerManager.ManagerRemain--;
             currentRemain--;
+            zankiIconText.text = "Å~" + currentRemain;
             remain = true;
         }
         _characterController.enabled = true;
