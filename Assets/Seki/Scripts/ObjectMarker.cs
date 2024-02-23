@@ -23,7 +23,9 @@ public class ObjectMarker : MonoBehaviour
     GameManager gameManager;
     bool active = false;
     //Canvas parent;
-
+    PauseManager pause;
+    MissionManager mission;
+    [SerializeField] GameObject ui;
 
     // 初期化メソッド（Prefabから生成する時などに使う）
     public void Initialize(Transform target, Camera targetCamera = null) {
@@ -38,6 +40,8 @@ public class ObjectMarker : MonoBehaviour
         //parent.renderMode = RenderMode.ScreenSpaceOverlay;
         _targetUI = targetObj.GetComponent<Transform>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        pause = GameObject.Find("PauseManager").GetComponent<PauseManager>();
+        mission = GameObject.Find("MissionManager").GetComponent<MissionManager>(); 
         // カメラが指定されていなければメインカメラにする
         if(_targetCamera == null)
             _targetCamera = Camera.main;
@@ -62,6 +66,12 @@ public class ObjectMarker : MonoBehaviour
         if(gameManager.GAMEOVER) {
             targetObj.enabled = false;
             //parent.renderMode = RenderMode.ScreenSpaceCamera;
+        }
+
+        if(playerC.FALLING || mission.STATMISSION || pause.PAUSE) {
+            ui.SetActive(false);
+        } else {
+            ui.SetActive(true);
         }
     }
 

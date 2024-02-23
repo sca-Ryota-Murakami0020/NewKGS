@@ -86,10 +86,10 @@ public class AirController : MonoBehaviour
         missionManager.MiSSIONCOUNT++;
         this.gameObject.SetActive(false);
     }
+    
 
-    private void OnTriggerEnter(Collider other) {
-        
-        if(other.gameObject.tag == "air") {
+    private void OnCollisionEnter(Collision collision) {    
+        if(collision.gameObject.tag == "air") {
             hit = true;
             gameManager.GAMEOVER = true;
             gameManager.CurrentRemain = -1;

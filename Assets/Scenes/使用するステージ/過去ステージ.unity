@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -29679,6 +29679,7 @@ RectTransform:
   m_Children:
   - {fileID: 1555947458}
   - {fileID: 1907206541}
+  - {fileID: 783309514}
   - {fileID: 811477084}
   - {fileID: 854987115}
   - {fileID: 71625669}
@@ -29686,7 +29687,6 @@ RectTransform:
   - {fileID: 2094414629}
   - {fileID: 1613697172}
   - {fileID: 1288286127}
-  - {fileID: 783309514}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -57617,7 +57617,6 @@ MonoBehaviour:
   _gravity: 30
   inputFallSpeed: 0.98
   fallSpeed: 100
-  shotRayPosition: {fileID: 0}
   rb: {fileID: 6716266315749539231}
   goalPos: {fileID: 1210987955}
   plane: {fileID: 818361620}
