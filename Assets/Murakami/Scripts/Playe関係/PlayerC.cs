@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using PathCreation;
 using UnityEngine.SceneManagement;
+using UnityEngine.ParticleSystemJobs;
 
 //[RequireComponent(typeof(CharacterController))]
 public class PlayerC : MonoBehaviour
@@ -44,6 +45,8 @@ public class PlayerC : MonoBehaviour
     private GameObject popEffectObject;
     [Header("デバフエフェクトの呼び出し位置"),SerializeField]
     private GameObject effectObject;
+    [Header("衝突時の衝撃エフェクト"),SerializeField]
+    private ParticleSystem shockEffect;
     [SerializeField]
     private GameObject shotRayPosition;
     [SerializeField]
@@ -887,6 +890,15 @@ public class PlayerC : MonoBehaviour
     //エフェクトの削除
     public void DeleteDebufEffect()
         =>effectObject.SetActive(false);
+
+    //衝撃エフェクトの呼び出し
+    private void SpornShockEffect()
+    {
+        Vector3 pos = this.gameObject.transform.position;
+        ParticleSystem effect = Instantiate(shockEffect);
+        effect.transform.position = pos;
+        effect.Play();
+    }
 
     private IEnumerator ResetMag()
     {
