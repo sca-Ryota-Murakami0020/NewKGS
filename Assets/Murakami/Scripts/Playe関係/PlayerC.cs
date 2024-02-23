@@ -47,6 +47,8 @@ public class PlayerC : MonoBehaviour
     private GameObject effectObject;
     [Header("衝突時の衝撃エフェクト"),SerializeField]
     private ParticleSystem shockEffect;
+    [Header("デバフ用の衝撃エフェクト"),SerializeField]
+    private ParticleSystem shockDebufEffect;
     [SerializeField]
     private GameObject shotRayPosition;
     [SerializeField]
@@ -381,7 +383,13 @@ public class PlayerC : MonoBehaviour
     {
         _inputMove = context.ReadValue<Vector2>();
         //ベクトルの入力
-        if(_inputMove != Vector2.zero) anim.SetBool("InputVec", true);
+        if(_inputMove != Vector2.zero)
+        {
+            //地上にいるなら
+            if(isGrounded) anim.SetBool("InputVec", true);
+            //空中にいるときor落下中なら
+            else anim.SetTrigger("OutGround");
+        }
         //停止
         else anim.SetBool("InputVec", false);
     }
@@ -709,6 +717,7 @@ public class PlayerC : MonoBehaviour
             sound.PlayOneShot(DamageSound);
             falling = true;
             //StartCoroutine(WaitFall());
+            SpornShockEffect();
             _playerInput.enabled = false;
             StartCoroutine(WaitChara());
         }
@@ -716,6 +725,7 @@ public class PlayerC : MonoBehaviour
         if(col.tag == "Car") {
             if(gameManager.CurrentRemain != 0) {
                 falling = true;
+                SpornShockEffect();
                 _playerInput.enabled = false;
             }
         }
@@ -811,7 +821,7 @@ public class PlayerC : MonoBehaviour
     //ワープポータルから離れた時間の計算
     private IEnumerator ChangeWarpPlam()
     {
-        yield return new WaitForSeconds(1);
+        yield return null;
         playerWarpP = WarpPlam.Can;
         Debug.Log("全てのワープ工程の完了");
     }
@@ -894,8 +904,17 @@ public class PlayerC : MonoBehaviour
     //衝撃エフェクトの呼び出し
     private void SpornShockEffect()
     {
-        Vector3 pos = this.gameObject.transform.position;
+        Vector3 pos = this.PopObject.transform.position;
         ParticleSystem effect = Instantiate(shockEffect);
+        effect.transform.position = pos;
+        effect.Play();
+    }
+
+    //デバフ用衝突エフェクトの呼び出し
+    private void SpornShockDebufEffect()
+    {
+        Vector3 pos = this.PopObject.transform.position;
+        ParticleSystem effect = Instantiate(shockDebufEffect);
         effect.transform.position = pos;
         effect.Play();
     }
@@ -911,10 +930,5 @@ public class PlayerC : MonoBehaviour
    
     //滞空時間計算
     private void CountOnAir()
-    {
-        //ジャンプ入力なし（トランポリンも）で地面から落ちたら
-        if(!doJump && !isGrounded) anim.SetTrigger("OutGround");
-        //落下時間を計算
-        onAirTime += Time.deltaTime;
-    }
+        => onAirTime += Time.deltaTime;
 }
