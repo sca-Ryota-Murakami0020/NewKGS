@@ -31,6 +31,8 @@ public class CoinC : MonoBehaviour
     private bool chasePlayer;
     //PlayerC
     private PlayerC playerC;
+    //大きさの最小値
+    private Vector3 minScale;
 
     private GameManager gameManager;
     MissionManager mission;
@@ -73,11 +75,6 @@ public class CoinC : MonoBehaviour
         }
     }
 
-    private void LateUpdate()
-    {
-      
-    }
-
     //色選択
     private void SelectMaterial()
     {
@@ -100,7 +97,6 @@ public class CoinC : MonoBehaviour
     {
         playerPosition = playerObject.transform.position;
         playerDistance = Vector3.Distance(playerPosition, this.transform.localPosition);
-        //playerVec = (playerPosition - this.transform.localPosition).normalized;
     }
 
     //近づいたプレイヤーの方向へ移動する
@@ -111,7 +107,9 @@ public class CoinC : MonoBehaviour
         this.transform.position = Vector3.Lerp(this.transform.position,target,distance);
         currentScaleMag = new Vector3(currentScaleMag.x - 2.0f, currentScaleMag.y, currentScaleMag.z - 2.0f);
         //縮小が完了したらプレイヤーの位置に移動する
-        if(currentScaleMag.x <= 2.0f && currentScaleMag.z <= 2.0f)
+        if((currentScaleMag.x <= 2.0f && currentScaleMag.z <= 2.0f) ||
+            (currentScaleMag.x <= 2.0f || currentScaleMag.z <= 2.0f) ||
+            (this.transform.localScale.x <= 0.1 || this.transform.localScale.z <= 0.1f))
         {
             currentScaleMag.x = 0.0f;
             currentScaleMag.z = 0.0f;
