@@ -21,6 +21,8 @@ public class RunOnlyPlayerC : MonoBehaviour
     private AvoidanceC avoC;
     [SerializeField]
     private ThirdStageGM thirdGM;
+    [SerializeField]
+    private ParticleSystem shockEffect;
 
     #region//スピード等のパラメータ関係
     [SerializeField] private Animator anim;
@@ -280,6 +282,7 @@ public class RunOnlyPlayerC : MonoBehaviour
             onGround = true;
             hitGround = true;
             Debug.Log("着地" + onGround);
+            anim.SetTrigger("Landing");
             //myRigidbody.useGravity = true;
         }           
         //何かしらのギミックに引っかかった時
@@ -290,6 +293,7 @@ public class RunOnlyPlayerC : MonoBehaviour
 
         if(collision.gameObject.tag == "Enemy") {
             sound.PlayOneShot(damageSound);
+            SpornShockEffect();
             fall = true;
         }
     }
@@ -322,5 +326,13 @@ public class RunOnlyPlayerC : MonoBehaviour
             fall = true;
             plane.enabled = false;
         }
+    }
+
+    private void SpornShockEffect()
+    {
+        Vector3 pos = this.gameObject.transform.position;
+        ParticleSystem effect = Instantiate(shockEffect);
+        effect.transform.position = pos;
+        effect.Play();
     }
 }

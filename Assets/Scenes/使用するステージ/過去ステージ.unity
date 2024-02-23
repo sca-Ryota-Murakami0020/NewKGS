@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -57613,6 +57613,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   avoC: {fileID: 2035902261}
   thirdGM: {fileID: 2079648246}
+  shockEffect: {fileID: 2650938796441353489, guid: 88fb9f52fbeb9404587b41701c49d30b, type: 3}
   anim: {fileID: 6716266315749539234}
   _gravity: 30
   inputFallSpeed: 0.98
