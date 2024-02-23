@@ -753,25 +753,43 @@ public class PlayerC : MonoBehaviour
         if(col.tag == "warp" && playerWarpP == WarpPlam.Can)
         {
             WarpC warpC = col.gameObject.GetComponent<WarpC>();
-            //Debug.Log("関数" + warpC.RollsignPortal.gameObject.name);
             Vector3 portalPos = warpC.RollsignPortal.transform.position;
             Quaternion portalRot = warpC.RollsignPortal.transform.rotation;
             //Debug.Log($"地点：{portalPos},回転：{portalRot}");
             _playerInput.enabled = false;
             cc.enabled = false;
+            WarpPlayerEffect(this.popEffectObject.transform.position);
             StartCoroutine(WarpPlayer(portalPos, portalRot));
         }
     }
 
+    //行先のワープポータルに飛ばす
     private IEnumerator WarpPlayer(Vector3 pos, Quaternion rot)
     {
+        yield return new WaitForSeconds(1.0f);
         playerWarpP = WarpPlam.Finish;
         this.transform.position = pos;
         this.transform.rotation = rot;
-        yield return new WaitForSeconds(1.0f);
         cc.enabled = true;
         _playerInput.enabled = true;
+        yield return new WaitForSeconds(0.3f);
+        WarpPlayerEffect(this.popEffectObject.transform.position);
+
         playerWarpP = WarpPlam.StayPortal;
+    }
+
+    [Header("ワープ用エフェクト"),SerializeField]
+    private ParticleSystem warpEffect;
+    [Header("表示管理する対象のモデル"),SerializeField]
+    private GameObject _model;
+    //ワープ用のエフェクトを表示。プレイヤーのモデルを非表示or表示する
+    private void WarpPlayerEffect(Vector3 pos)
+    {
+        ParticleSystem effect = Instantiate(warpEffect);
+        effect.transform.position = pos;
+        effect.Play();
+        if(this._model.activeSelf) this._model.SetActive(false);
+        else this._model.SetActive(true);
     }
 
     private void OnTriggerStay(Collider other)
@@ -823,7 +841,7 @@ public class PlayerC : MonoBehaviour
     {
         yield return null;
         playerWarpP = WarpPlam.Can;
-        Debug.Log("全てのワープ工程の完了");
+        //Debug.Log("全てのワープ工程の完了");
     }
 
     IEnumerator WaitJump() {
@@ -904,7 +922,7 @@ public class PlayerC : MonoBehaviour
     //衝撃エフェクトの呼び出し
     private void SpornShockEffect()
     {
-        Vector3 pos = this.PopObject.transform.position;
+        Vector3 pos = this.popEffectObject.transform.position;
         ParticleSystem effect = Instantiate(shockEffect);
         effect.transform.position = pos;
         effect.Play();
@@ -913,7 +931,7 @@ public class PlayerC : MonoBehaviour
     //デバフ用衝突エフェクトの呼び出し
     private void SpornShockDebufEffect()
     {
-        Vector3 pos = this.PopObject.transform.position;
+        Vector3 pos = this.popEffectObject.transform.position;
         ParticleSystem effect = Instantiate(shockDebufEffect);
         effect.transform.position = pos;
         effect.Play();
