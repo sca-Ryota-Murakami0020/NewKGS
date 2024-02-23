@@ -84729,6 +84729,8 @@ MonoBehaviour:
   slopeObj: {fileID: 1637814960}
   sound: {fileID: 6783243683888455581}
   DamageSound: {fileID: 8300000, guid: 19e38c88ceea57b4c8d353e8f74c11cb, type: 3}
+  warpEffect: {fileID: 6724699242110634378, guid: c1967d23b8b9d65488592d1605cb5e9b, type: 3}
+  _model: {fileID: 6234171072732325100}
 --- !u!114 &6783243683888455579
 MonoBehaviour:
   m_ObjectHideFlags: 0
