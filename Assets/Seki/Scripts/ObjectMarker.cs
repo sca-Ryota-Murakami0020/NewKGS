@@ -25,7 +25,7 @@ public class ObjectMarker : MonoBehaviour
     //Canvas parent;
     PauseManager pause;
     MissionManager mission;
-    [SerializeField] GameObject ui;
+    
 
     // 初期化メソッド（Prefabから生成する時などに使う）
     public void Initialize(Transform target, Camera targetCamera = null) {
@@ -68,11 +68,7 @@ public class ObjectMarker : MonoBehaviour
             //parent.renderMode = RenderMode.ScreenSpaceCamera;
         }
 
-        if(playerC.FALLING || mission.STATMISSION || pause.PAUSE) {
-            ui.SetActive(false);
-        } else {
-            ui.SetActive(true);
-        }
+        
     }
 
     IEnumerator WaitFlag() {

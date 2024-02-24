@@ -10449,7 +10449,6 @@ MonoBehaviour:
   targetObj: {fileID: 1538963581}
   _worldOffset: {x: 0, y: 1, z: 0}
   playerC: {fileID: 6783243683888455578}
-  ui: {fileID: 1538963579}
 --- !u!114 &490451970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13684,7 +13683,6 @@ MonoBehaviour:
   targetObj: {fileID: 1867498260}
   _worldOffset: {x: 0, y: 1, z: 0}
   playerC: {fileID: 6783243683888455578}
-  ui: {fileID: 1867498258}
 --- !u!114 &662481656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20116,7 +20114,6 @@ MonoBehaviour:
   targetObj: {fileID: 177184338}
   _worldOffset: {x: 0, y: 1, z: 0}
   playerC: {fileID: 6783243683888455578}
-  ui: {fileID: 177184336}
 --- !u!114 &1066553368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20472,7 +20469,6 @@ MonoBehaviour:
   targetObj: {fileID: 417109552}
   _worldOffset: {x: 0, y: 1, z: 0}
   playerC: {fileID: 6783243683888455578}
-  ui: {fileID: 417109550}
 --- !u!114 &1087103459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25210,7 +25206,6 @@ MonoBehaviour:
   targetObj: {fileID: 1153339845}
   _worldOffset: {x: 0, y: 1, z: 0}
   playerC: {fileID: 6783243683888455578}
-  ui: {fileID: 1153339843}
 --- !u!114 &1316392272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27001,7 +26996,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3081517057053132891, guid: bc8ec55a25f47284b8152f9b055d9c99, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -31836,7 +31831,6 @@ MonoBehaviour:
   targetObj: {fileID: 956797460}
   _worldOffset: {x: 0, y: 1, z: 0}
   playerC: {fileID: 6783243683888455578}
-  ui: {fileID: 956797458}
 --- !u!114 &1703278614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33586,7 +33580,6 @@ MonoBehaviour:
   targetObj: {fileID: 1062831515}
   _worldOffset: {x: 0, y: 1, z: 0}
   playerC: {fileID: 6783243683888455578}
-  ui: {fileID: 1062831513}
 --- !u!114 &1808170032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84705,7 +84698,7 @@ MonoBehaviour:
   _initFallSpeed: 3
   _fallSpeed: 30
   _gravity: 15
-  defaultJumpSpeed: 5.45
+  defaultJumpSpeed: 8
   addJumpSpeed: 20
   sliderSpeed: 20
   canvas: {fileID: 6783243682079704175}
