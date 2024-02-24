@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6198,8 +6198,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c0ba778b1731e45924b26fc2afee0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addSpeedMag: 3
-  addJumpMag: 3
+  addSpeedMag: 1.6
+  addJumpMag: 1.8
   subGravity: 0.7
 --- !u!1001 &149751829
 PrefabInstance:
@@ -6481,8 +6481,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c0ba778b1731e45924b26fc2afee0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addSpeedMag: 3
-  addJumpMag: 3
+  addSpeedMag: 1.6
+  addJumpMag: 1.8
   subGravity: 0.7
 --- !u!54 &150929498
 Rigidbody:
@@ -13515,8 +13515,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c0ba778b1731e45924b26fc2afee0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addSpeedMag: 3
-  addJumpMag: 3
+  addSpeedMag: 1.7
+  addJumpMag: 2.7
   subGravity: 0.5
 --- !u!65 &307839844
 BoxCollider:
@@ -27487,8 +27487,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c0ba778b1731e45924b26fc2afee0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addSpeedMag: 3
-  addJumpMag: 3
+  addSpeedMag: 2.3
+  addJumpMag: 2
   subGravity: 0.5
 --- !u!65 &617947421
 BoxCollider:
@@ -28703,8 +28703,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c0ba778b1731e45924b26fc2afee0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addSpeedMag: 3
-  addJumpMag: 3
+  addSpeedMag: 1.2
+  addJumpMag: 1.6
   subGravity: 0.8
 --- !u!1 &642448548
 GameObject:
@@ -37304,8 +37304,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c0ba778b1731e45924b26fc2afee0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addSpeedMag: 3
-  addJumpMag: 3
+  addSpeedMag: 1.6
+  addJumpMag: 1.6
   subGravity: 0.4
 --- !u!65 &868142557
 BoxCollider:
@@ -44053,8 +44053,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c0ba778b1731e45924b26fc2afee0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addSpeedMag: 3
-  addJumpMag: 3
+  addSpeedMag: 2.2
+  addJumpMag: 2.6
   subGravity: 0.6
 --- !u!65 &1033505424
 BoxCollider:
@@ -45456,8 +45456,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c0ba778b1731e45924b26fc2afee0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addSpeedMag: 3
-  addJumpMag: 3
+  addSpeedMag: 2.6
+  addJumpMag: 2.3
   subGravity: 0.5
 --- !u!65 &1057024014
 BoxCollider:
@@ -60234,8 +60234,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c0ba778b1731e45924b26fc2afee0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addSpeedMag: 3
-  addJumpMag: 3
+  addSpeedMag: 2.2
+  addJumpMag: 2.6
   subGravity: 0.6
 --- !u!65 &1305684677
 BoxCollider:
@@ -61644,8 +61644,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c0ba778b1731e45924b26fc2afee0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addSpeedMag: 3
-  addJumpMag: 3
+  addSpeedMag: 2.4
+  addJumpMag: 2.2
   subGravity: 0.5
 --- !u!65 &1337970698
 BoxCollider:
@@ -63720,8 +63720,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c0ba778b1731e45924b26fc2afee0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addSpeedMag: 3
-  addJumpMag: 3
+  addSpeedMag: 1.7
+  addJumpMag: 2
   subGravity: 0.5
 --- !u!1 &1386674344
 GameObject:
@@ -72270,7 +72270,7 @@ Transform:
   m_GameObject: {fileID: 1471275793}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 48, z: 0.446}
+  m_LocalPosition: {x: -0, y: 48, z: 0.446}
   m_LocalScale: {x: 1, y: 72.4, z: -0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -72288,8 +72288,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c0ba778b1731e45924b26fc2afee0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addSpeedMag: 3
-  addJumpMag: 3
+  addSpeedMag: 2.3
+  addJumpMag: 2.6
   subGravity: 0.5
 --- !u!65 &1471275796
 BoxCollider:
@@ -73276,8 +73276,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c0ba778b1731e45924b26fc2afee0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addSpeedMag: 3
-  addJumpMag: 3
+  addSpeedMag: 1.7
+  addJumpMag: 2.7
   subGravity: 0.5
 --- !u!65 &1504030387
 BoxCollider:
@@ -78964,8 +78964,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c0ba778b1731e45924b26fc2afee0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addSpeedMag: 3
-  addJumpMag: 3
+  addSpeedMag: 2.8
+  addJumpMag: 2.6
   subGravity: 0.7
 --- !u!54 &1528831174
 Rigidbody:
@@ -84327,8 +84327,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c0ba778b1731e45924b26fc2afee0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addSpeedMag: 3
-  addJumpMag: 3
+  addSpeedMag: 2.4
+  addJumpMag: 2.6
   subGravity: 0.5
 --- !u!114 &1676928319
 MonoBehaviour:
@@ -86128,8 +86128,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c0ba778b1731e45924b26fc2afee0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addSpeedMag: 3
-  addJumpMag: 3
+  addSpeedMag: 1.6
+  addJumpMag: 1.8
   subGravity: 0.7
 --- !u!65 &1720760728
 BoxCollider:
@@ -94043,8 +94043,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c0ba778b1731e45924b26fc2afee0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addSpeedMag: 3
-  addJumpMag: 3
+  addSpeedMag: 1.1
+  addJumpMag: 1.4
   subGravity: 0.5
 --- !u!1 &1919697258 stripped
 GameObject:
@@ -98629,8 +98629,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c0ba778b1731e45924b26fc2afee0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addSpeedMag: 3
-  addJumpMag: 3
+  addSpeedMag: 2.2
+  addJumpMag: 2.6
   subGravity: 0.6
 --- !u!65 &2005048785
 BoxCollider:
@@ -101505,8 +101505,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c0ba778b1731e45924b26fc2afee0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addSpeedMag: 3
-  addJumpMag: 3
+  addSpeedMag: 2.6
+  addJumpMag: 2.3
   subGravity: 0.5
 --- !u!65 &2079204516
 BoxCollider:
@@ -108162,8 +108162,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c0ba778b1731e45924b26fc2afee0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addSpeedMag: 3
-  addJumpMag: 3
+  addSpeedMag: 2.1
+  addJumpMag: 1.5
   subGravity: 0.6
 --- !u!114 &3010387855375797635
 MonoBehaviour:
@@ -108177,8 +108177,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c0ba778b1731e45924b26fc2afee0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addSpeedMag: 3
-  addJumpMag: 3
+  addSpeedMag: 2.3
+  addJumpMag: 3.6
   subGravity: 0.2
 --- !u!114 &3010387856165750608
 MonoBehaviour:
@@ -108192,8 +108192,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c0ba778b1731e45924b26fc2afee0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addSpeedMag: 3
-  addJumpMag: 3
+  addSpeedMag: 2.2
+  addJumpMag: 2.6
   subGravity: 0.6
 --- !u!114 &3010387856416700069
 MonoBehaviour:
@@ -108207,8 +108207,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c0ba778b1731e45924b26fc2afee0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addSpeedMag: 3
-  addJumpMag: 3
+  addSpeedMag: 2.4
+  addJumpMag: 2.2
   subGravity: 0.4
 --- !u!114 &3010387856462336993
 MonoBehaviour:
@@ -108222,8 +108222,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c0ba778b1731e45924b26fc2afee0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addSpeedMag: 3
-  addJumpMag: 3
+  addSpeedMag: 2
+  addJumpMag: 2
   subGravity: 0.6
 --- !u!114 &3010387857132378864
 MonoBehaviour:
@@ -109867,8 +109867,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c0ba778b1731e45924b26fc2afee0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addSpeedMag: 3
-  addJumpMag: 3
+  addSpeedMag: 2.3
+  addJumpMag: 2.6
   subGravity: 0.5
 --- !u!33 &4873437078196531798
 MeshFilter:
@@ -117045,8 +117045,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c0ba778b1731e45924b26fc2afee0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addSpeedMag: 3
-  addJumpMag: 3
+  addSpeedMag: 2.5
+  addJumpMag: 2.5
   subGravity: 0.3
 --- !u!1 &8509647846867239939
 GameObject:
